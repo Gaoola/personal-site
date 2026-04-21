@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Research — Chaoyang Gao (Kevin)</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#0d1210;--bg2:#111a13;--bg3:#182019;--border:#243028;
+      --text:#e6ebe6;--muted:#7d9180;
+      --accent:#6aab72;--accent-dim:#3d6b43;
+      --gold:#c9963a;--gold-soft:#e8c472;--stone:#9e8660;
+      --serif:'EB Garamond',Georgia,serif;--sans:'Outfit',sans-serif;--mono:'JetBrains Mono',monospace;
+    }
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:300;line-height:1.75;overflow-x:hidden}
+
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 3.5rem;background:rgba(13,18,16,.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+    .nav-name{font-family:var(--serif);font-size:1.1rem;color:var(--text);text-decoration:none}
+    .nav-name em{font-style:italic;color:var(--accent)}
+    .nav-links{display:flex;gap:2.2rem;list-style:none}
+    .nav-links a{font-size:.75rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--muted);transition:color .2s}
+    .nav-links a:hover,.nav-links a.active{color:var(--accent)}
+
+    .page-hero{padding:9rem 5rem 4rem;background:var(--bg);position:relative;overflow:hidden}
+    .page-hero::after{content:'';position:absolute;inset:0;pointer-events:none;
+      background:radial-gradient(ellipse 55% 70% at 80% 45%,rgba(106,171,114,.07) 0%,transparent 65%),
+                 radial-gradient(ellipse 30% 40% at 5% 90%,rgba(201,150,58,.05) 0%,transparent 55%)}
+    .hero-inner{position:relative;z-index:1;opacity:0;animation:fadeUp .7s .05s ease forwards}
+    .eyebrow{display:flex;align-items:center;gap:.8rem;margin-bottom:1.2rem}
+    .eyebrow-line{width:28px;height:1px;background:var(--accent)}
+    .eyebrow span{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+    .page-title{font-family:var(--serif);font-size:clamp(2.2rem,4vw,3.4rem);font-weight:500;line-height:1.2;margin-bottom:1rem}
+    .page-sub{font-size:1rem;color:var(--muted);max-width:540px;line-height:1.8}
+
+    .page-body{padding:4rem 5rem 6rem}
+    .sec-hd{display:flex;align-items:center;gap:1rem;margin-bottom:2.5rem}
+    .sec-n{font-family:var(--mono);font-size:.68rem;color:var(--gold);letter-spacing:.12em}
+    .sec-t{font-family:var(--serif);font-size:1.5rem;font-weight:500}
+    .sec-r{flex:1;height:1px;background:var(--border)}
+
+    /* research flow */
+    .flow{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:3rem;padding:1.4rem 1.8rem;
+      background:linear-gradient(135deg,rgba(24,32,25,.8),rgba(18,26,19,.6));
+      border:1px solid var(--accent-dim);border-radius:3px;width:fit-content}
+    .rf{font-family:var(--serif);font-size:1.1rem;font-style:italic;color:var(--text)}
+    .ra{color:var(--accent);font-size:1.2rem}
+
+    /* interest cards */
+    .int-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.2rem;margin-bottom:4rem}
+    .int-card{padding:1.8rem;background:var(--bg3);border:1px solid var(--border);border-radius:3px;transition:border-color .2s,transform .2s}
+    .int-card:hover{border-color:var(--accent-dim);transform:translateY(-3px)}
+    .int-card h3{font-family:var(--serif);font-size:1.1rem;font-weight:500;margin-bottom:.6rem;color:var(--text)}
+    .int-card p{font-size:.86rem;color:var(--muted);line-height:1.7}
+    .int-card .ic-tag{display:inline-block;font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;padding:.2rem .5rem;border:1px solid var(--accent-dim);border-radius:2px;color:var(--accent);margin-bottom:.8rem}
+
+    /* notes */
+    .notes-lbl{font-family:var(--mono);font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+    .notes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem}
+    .note-card{display:flex;flex-direction:column;padding:1.5rem;background:var(--bg3);border:1px solid var(--border);border-radius:3px;text-decoration:none;color:var(--text);transition:border-color .2s,transform .22s}
+    .note-card:hover{border-color:var(--accent);transform:translateY(-3px)}
+    .note-icon{font-size:1.3rem;margin-bottom:.7rem}
+    .note-title{font-family:var(--serif);font-size:.98rem;font-weight:500;margin-bottom:.3rem;line-height:1.4}
+    .note-sub{font-size:.72rem;color:var(--muted);font-family:var(--mono)}
+
+    footer{padding:1.8rem 5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:var(--bg2)}
+    footer p{font-family:var(--mono);font-size:.68rem;color:var(--muted);opacity:.4}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+    @media(max-width:900px){
+      nav{padding:1rem 1.5rem}.nav-links{gap:1.2rem}
+      .page-hero{padding:7rem 2rem 3rem}.page-body{padding:3rem 2rem 5rem}
+      footer{flex-direction:column;gap:.4rem;padding:1.5rem 2rem}
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="nav-name" href="index.html">Chaoyang Gao <em>(Kevin)</em></a>
+    <ul class="nav-links">
+      <li><a href="index.html">About</a></li>
+      <li><a href="research.html" class="active">Research</a></li>
+      <li><a href="teaching.html">Teaching</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-hero">
+    <div class="hero-inner">
+      <div class="eyebrow"><div class="eyebrow-line"></div><span>Mathematics</span></div>
+      <h1 class="page-title">Research & Notes</h1>
+      <p class="page-sub">My work explores the rich interplay between differential geometry, complex geometry, and the theory of Higgs bundles — studying moduli spaces and flat connections through geometric and analytic tools.</p>
+    </div>
+  </div>
+
+  <div class="page-body">
+    <div class="sec-hd"><span class="sec-n">01</span><h2 class="sec-t">Research Interests</h2><div class="sec-r"></div></div>
+
+    <div class="flow">
+      <span class="rf">Differential Geometry</span>
+      <span class="ra">→</span>
+      <span class="rf">Complex Geometry</span>
+      <span class="ra">→</span>
+      <span class="rf">Higgs Bundles</span>
+    </div>
+
+    <div class="int-grid">
+      <div class="int-card">
+        <div class="ic-tag">Core</div>
+        <h3>Differential Geometry</h3>
+        <p>Smooth manifolds and their geometric structures — connections, curvature, and the interplay between local and global properties of geometric spaces.</p>
+      </div>
+      <div class="int-card">
+        <div class="ic-tag">Core</div>
+        <h3>Complex Geometry</h3>
+        <p>Geometric structures on complex manifolds, holomorphic vector bundles, and analytic tools arising from complex analysis and differential geometry.</p>
+      </div>
+      <div class="int-card">
+        <div class="ic-tag">Focus</div>
+        <h3>Higgs Bundles</h3>
+        <p>Pairs of a holomorphic vector bundle and a Higgs field, connected to flat connections, surface group representations, and non-abelian Hodge theory.</p>
+      </div>
+      <div class="int-card">
+        <div class="ic-tag">Related</div>
+        <h3>Teichmüller Theory</h3>
+        <p>Moduli of Riemann surfaces and hyperbolic structures, and their connections to representation varieties and higher Teichmüller spaces.</p>
+      </div>
+    </div>
+
+    <div class="sec-hd"><span class="sec-n">02</span><h2 class="sec-t">Expository Notes</h2><div class="sec-r"></div></div>
+    <p class="notes-lbl">PDF · Available to Download</p>
+    <div class="notes-grid">
+      <a class="note-card" href="https://drive.google.com/file/d/1TDaS_EmR6G2FkEBYiyciWLvT-xljeAAk/view?usp=share_link" target="_blank">
+        <div class="note-icon">📄</div>
+        <div class="note-title">Differential Topology</div>
+        <div class="note-sub">expository notes</div>
+      </a>
+      <a class="note-card" href="https://drive.google.com/file/d/15Y2eRN7er-IPr_TZW7TyapFvZTyB91US/view?usp=share_link" target="_blank">
+        <div class="note-icon">📄</div>
+        <div class="note-title">Riemann Surfaces</div>
+        <div class="note-sub">expository notes</div>
+      </a>
+      <a class="note-card" href="https://drive.google.com/file/d/1HjQoB5qrl0LR5qXKHsR2_kRnEUiO-Hi6/view?usp=share_link" target="_blank">
+        <div class="note-icon">📄</div>
+        <div class="note-title">Intro to Teichmüller Space</div>
+        <div class="note-sub">expository notes</div>
+      </a>
+      <a class="note-card" href="https://drive.google.com/file/d/1cw8Snjh-CE2OunOCkJO-GEtT2d_nj94T/view?usp=share_link" target="_blank">
+        <div class="note-icon">📄</div>
+        <div class="note-title">Connections</div>
+        <div class="note-sub">expository notes</div>
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    <p>Chaoyang Gao (Kevin) · Mathematics</p>
+    <p>Updated 2025</p>
+  </footer>
+</body>
+</html>

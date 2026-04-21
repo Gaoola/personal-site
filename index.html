@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chaoyang Gao (Kevin) — Mathematics</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#0d1210;--bg2:#111a13;--bg3:#182019;--border:#243028;
+      --text:#e6ebe6;--muted:#7d9180;
+      --accent:#6aab72;--accent-dim:#3d6b43;
+      --gold:#c9963a;--gold-soft:#e8c472;--stone:#9e8660;
+      --serif:'EB Garamond',Georgia,serif;
+      --sans:'Outfit',sans-serif;
+      --mono:'JetBrains Mono',monospace;
+    }
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:300;line-height:1.75;overflow-x:hidden}
+
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 3.5rem;background:rgba(13,18,16,0.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+    .nav-name{font-family:var(--serif);font-size:1.1rem;color:var(--text);text-decoration:none}
+    .nav-name em{font-style:italic;color:var(--accent)}
+    .nav-links{display:flex;gap:2.2rem;list-style:none}
+    .nav-links a{font-size:.75rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--muted);transition:color .2s}
+    .nav-links a:hover,.nav-links a.active{color:var(--accent)}
+
+    #hero{min-height:100vh;display:grid;grid-template-columns:1.1fr .9fr;padding-top:72px;position:relative;overflow:hidden}
+    #hero::after{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
+      background:radial-gradient(ellipse 55% 65% at 75% 35%,rgba(106,171,114,.09) 0%,transparent 65%),
+                 radial-gradient(ellipse 40% 45% at 15% 80%,rgba(201,150,58,.06) 0%,transparent 55%)}
+
+    .hero-left{display:flex;flex-direction:column;justify-content:center;padding:5rem 3rem 5rem 5rem;position:relative;z-index:1;opacity:0;animation:fadeUp .8s .1s ease forwards}
+    .eyebrow{display:flex;align-items:center;gap:.8rem;margin-bottom:1.5rem}
+    .eyebrow-line{width:32px;height:1px;background:var(--accent)}
+    .eyebrow span{font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+    h1{font-family:var(--serif);font-size:clamp(2.6rem,4vw,4rem);font-weight:500;line-height:1.15;margin-bottom:.3rem}
+    .alias{font-family:var(--serif);font-size:1.15rem;font-style:italic;color:var(--muted);margin-bottom:1.6rem}
+    .hero-desc{font-size:.98rem;color:var(--muted);max-width:420px;margin-bottom:2rem;line-height:1.8}
+    .hero-desc a{color:var(--accent);text-decoration:none}
+    .hero-desc a:hover{text-decoration:underline}
+
+    .tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2.5rem}
+    .tag{font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;padding:.3rem .75rem;border:1px solid var(--border);border-radius:2px;color:var(--muted);background:var(--bg2)}
+    .tag.g{border-color:var(--accent-dim);color:var(--accent)}
+    .tag.au{border-color:#5a3d10;color:var(--gold-soft);background:#150f04}
+
+    .btn-row{display:flex;gap:1rem;flex-wrap:wrap}
+    .btn{display:inline-block;padding:.62rem 1.5rem;font-family:var(--sans);font-size:.8rem;font-weight:500;letter-spacing:.08em;text-decoration:none;border-radius:2px;transition:all .22s;border:none;cursor:pointer}
+    .btn-p{background:var(--accent);color:var(--bg)}
+    .btn-p:hover{background:#87c48e}
+    .btn-o{background:transparent;color:var(--muted);border:1px solid var(--border)}
+    .btn-o:hover{border-color:var(--accent);color:var(--accent)}
+    .btn-g{background:transparent;color:var(--gold);border:1px solid #5a3d10}
+    .btn-g:hover{border-color:var(--gold);color:var(--gold-soft)}
+
+    /* OBU badge */
+    .obu-badge{display:inline-flex;align-items:center;gap:.7rem;margin-top:2rem;padding:.6rem 1.1rem;
+      background:linear-gradient(135deg,rgba(36,64,38,.55),rgba(26,48,28,.3));
+      border:1px solid var(--accent-dim);border-radius:2px;font-size:.8rem;color:var(--accent);width:fit-content}
+    .obu-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex-shrink:0}
+    .obu-badge span{color:var(--muted)}
+
+    .hero-right{display:flex;align-items:center;justify-content:center;padding:4rem 3rem;position:relative;z-index:1;opacity:0;animation:fadeIn 1s .3s ease forwards}
+    .math-bg{position:absolute;top:50%;right:3rem;transform:translateY(-50%);font-family:var(--serif);font-size:11rem;color:rgba(106,171,114,.05);font-style:italic;user-select:none;pointer-events:none}
+    .photo-frame{position:relative}
+    .photo-frame::before{content:'';position:absolute;top:-12px;left:-12px;right:12px;bottom:12px;border:1px solid var(--accent-dim);border-radius:4px;opacity:.5}
+    .photo-inner{width:240px;height:280px;border-radius:3px;overflow:hidden;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center}
+    .photo-ph{font-family:var(--serif);font-size:5rem;color:var(--border)}
+
+    /* ABOUT SECTION */
+    .page-body{padding:5rem 5rem;background:var(--bg2)}
+    .sec-hd{display:flex;align-items:center;gap:1rem;margin-bottom:3rem}
+    .sec-n{font-family:var(--mono);font-size:.68rem;color:var(--gold);letter-spacing:.12em}
+    .sec-t{font-family:var(--serif);font-size:1.9rem;font-weight:500}
+    .sec-r{flex:1;height:1px;background:var(--border)}
+
+    .about-grid{display:grid;grid-template-columns:1fr 300px;gap:4rem;align-items:start}
+    .about-text p{font-size:1rem;color:var(--muted);margin-bottom:1.2rem;line-height:1.85;max-width:580px}
+    .about-text p a{color:var(--accent);text-decoration:none}
+    .about-text p a:hover{text-decoration:underline}
+    .about-text p a.obu-link{color:var(--gold-soft)}
+    .about-text p a.obu-link:hover{color:var(--gold)}
+
+    .sidebar{display:flex;flex-direction:column;gap:1rem}
+    .sc{padding:1.2rem 1.4rem;background:var(--bg3);border:1px solid var(--border);border-radius:3px}
+    .sc.obu{border-color:var(--accent-dim);background:rgba(18,28,19,.9)}
+    .sc h4{font-family:var(--mono);font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem}
+    .sc.obu h4{color:var(--accent)}
+    .sc p,.sc a{font-size:.88rem;color:var(--muted);text-decoration:none;display:block;line-height:1.6}
+    .sc a:hover{color:var(--accent)}
+    .sc .incoming{color:var(--accent);font-style:italic}
+
+    footer{padding:1.8rem 5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+    footer p{font-family:var(--mono);font-size:.68rem;color:var(--muted);opacity:.4}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+    @media(max-width:900px){
+      nav{padding:1rem 1.5rem}.nav-links{gap:1.2rem}
+      #hero{grid-template-columns:1fr}.hero-right{display:none}
+      .hero-left{padding:4rem 2rem}.page-body{padding:3.5rem 1.8rem}
+      .about-grid{grid-template-columns:1fr}
+      footer{flex-direction:column;gap:.4rem;padding:1.5rem 2rem}
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="nav-name" href="index.html">Chaoyang Gao <em>(Kevin)</em></a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">About</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="teaching.html">Teaching</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section id="hero">
+    <div class="hero-left">
+      <div class="eyebrow"><div class="eyebrow-line"></div><span>Mathematician · Incoming Faculty</span></div>
+      <h1>Chaoyang Gao</h1>
+      <p class="alias">Kevin</p>
+      <p class="hero-desc">
+        PhD candidate at <a href="https://www.ucr.edu" target="_blank">UC Riverside</a>, working under
+        <a href="https://sites.google.com/view/brian-collier/home" target="_blank">Dr. Brian Collier</a>.
+        Research at the intersection of differential geometry, complex geometry, and Higgs bundle theory.
+      </p>
+      <div class="tags">
+        <span class="tag g">Differential Geometry</span>
+        <span class="tag g">Higgs Bundles</span>
+        <span class="tag">Complex Geometry</span>
+        <span class="tag au">Teichmüller Theory</span>
+        <span class="tag">Riemann Surfaces</span>
+      </div>
+      <div class="btn-row">
+        <a class="btn btn-p" href="research.html">Research & Notes</a>
+        <a class="btn btn-o" href="teaching.html">Teaching</a>
+        <a class="btn btn-g" href="contact.html">Contact</a>
+      </div>
+      <div class="obu-badge">
+        <div class="obu-dot"></div>
+        Incoming Faculty — <span>Oklahoma Baptist University · Fall 2025</span>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="math-bg">∇</div>
+      <div class="photo-frame">
+        <div class="photo-inner">
+          <!-- To add photo: <img src="photo.jpg" alt="Kevin Gao" style="width:100%;height:100%;object-fit:cover"> -->
+          <span class="photo-ph">𝒦</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="page-body">
+    <div class="sec-hd"><span class="sec-n">01</span><h2 class="sec-t">About</h2><div class="sec-r"></div></div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I am a fifth-year PhD candidate in the Department of Mathematics at the <a href="https://mathdept.ucr.edu" target="_blank">University of California, Riverside</a>, advised by <a href="https://sites.google.com/view/brian-collier/home" target="_blank">Dr. Brian Collier</a>. I received my M.S. from UC Riverside and my B.S. from <a href="https://www.biola.edu" target="_blank">Biola University</a>.</p>
+        <p>My research interests lie in differential and complex geometry, with a particular focus on Higgs bundles, flat connections, and the geometry of moduli spaces. I am also drawn to Teichmüller theory and its deep connections to these structures.</p>
+        <p>Alongside research, I am committed to mathematics education. I have taught courses from precalculus through multivariable calculus and topology at UC Riverside and California Baptist University, both as instructor of record and teaching assistant.</p>
+        <p>This fall, I will be joining the faculty at <a class="obu-link" href="https://www.okbu.edu" target="_blank">Oklahoma Baptist University</a> in Shawnee, Oklahoma. I look forward to continuing my research and building a strong teaching program there.</p>
+      </div>
+      <div class="sidebar">
+        <div class="sc obu">
+          <h4>Incoming Position</h4>
+          <p class="incoming">Oklahoma Baptist University</p>
+          <p>Department of Mathematics</p>
+          <p style="font-size:.8rem;margin-top:.3rem;color:var(--gold);font-family:var(--mono);letter-spacing:.06em">Faculty · Fall 2025</p>
+        </div>
+        <div class="sc">
+          <h4>Current Affiliation</h4>
+          <p>Department of Mathematics</p>
+          <p>University of California, Riverside</p>
+        </div>
+        <div class="sc">
+          <h4>Advisor</h4>
+          <a href="https://sites.google.com/view/brian-collier/home" target="_blank">Dr. Brian Collier</a>
+        </div>
+        <div class="sc">
+          <h4>Education</h4>
+          <p>Ph.D. (in progress) — UC Riverside</p>
+          <p>M.S. — UC Riverside</p>
+          <p>B.S. — Biola University</p>
+        </div>
+        <div class="sc">
+          <h4>Email</h4>
+          <a href="mailto:cgao@ucr.edu">cgao@ucr.edu</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Chaoyang Gao (Kevin) · Mathematics</p>
+    <p>Updated 2025</p>
+  </footer>
+</body>
+</html>
