@@ -3,154 +3,187 @@
 <head>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>Teaching — Chaoyang Gao (Kevin)</title>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{
-      --bg:#0d1210;--bg2:#111a13;--bg3:#182019;--border:#243028;
-      --text:#e6ebe6;--muted:#7d9180;
-      --accent:#6aab72;--accent-dim:#3d6b43;
-      --gold:#c9963a;--gold-soft:#e8c472;--stone:#9e8660;
-      --serif:'EB Garamond',Georgia,serif;--sans:'Outfit',sans-serif;--mono:'JetBrains Mono',monospace;
+      --bg:#f7f3ee;--bg2:#f0ebe3;--bg3:#e8e1d7;--border:#d6cfc4;
+      --text:#1a1a18;--muted:#6b6560;--faint:#9c958d;
+      --accent:#2d6e35;--accent-dim:#c8deca;--accent-bg:#edf5ee;
+      --gold:#a07820;--gold-bg:#fdf6e3;--gold-border:#e8d49a;
+      --serif:'DM Serif Display',Georgia,serif;
+      --sans:'DM Sans',sans-serif;
+      --mono:'DM Mono',monospace;
     }
     html{scroll-behavior:smooth}
-    body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:300;line-height:1.75;overflow-x:hidden}
+    body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:18px;font-weight:300;line-height:1.75;overflow-x:hidden}
 
-    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 3.5rem;background:rgba(13,18,16,.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
-    .nav-name{font-family:var(--serif);font-size:1.1rem;color:var(--text);text-decoration:none}
-    .nav-name em{font-style:italic;color:var(--accent)}
-    .nav-links{display:flex;gap:2.2rem;list-style:none}
-    .nav-links a{font-size:.75rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--muted);transition:color .2s}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 4rem;background:rgba(247,243,238,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+    .nav-name{font-family:var(--sans);font-size:.95rem;font-weight:600;letter-spacing:-.01em;color:var(--text);text-decoration:none}
+    .nav-links{display:flex;gap:2rem;list-style:none}
+    .nav-links a{font-size:.78rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--muted);transition:color .15s}
     .nav-links a:hover,.nav-links a.active{color:var(--accent)}
 
-    .page-hero{padding:9rem 5rem 4rem;background:var(--bg);position:relative;overflow:hidden}
-    .page-hero::after{content:'';position:absolute;inset:0;pointer-events:none;
-      background:radial-gradient(ellipse 50% 65% at 15% 55%,rgba(201,150,58,.05) 0%,transparent 60%),
-                 radial-gradient(ellipse 40% 50% at 85% 30%,rgba(106,171,114,.06) 0%,transparent 60%)}
-    .hero-inner{position:relative;z-index:1;opacity:0;animation:fadeUp .7s .05s ease forwards}
-    .eyebrow{display:flex;align-items:center;gap:.8rem;margin-bottom:1.2rem}
-    .eyebrow-line{width:28px;height:1px;background:var(--gold)}
-    .eyebrow span{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
-    .page-title{font-family:var(--serif);font-size:clamp(2.2rem,4vw,3.4rem);font-weight:500;line-height:1.2;margin-bottom:1rem}
-    .page-sub{font-size:1rem;color:var(--muted);max-width:560px;line-height:1.8}
+    .page-hero{padding:8rem 4rem 3.5rem;border-bottom:1px solid var(--border);opacity:0;animation:fadeUp .6s .05s ease forwards}
+    .hero-label{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem}
+    .hero-label::before{content:'';display:block;width:24px;height:1px;background:var(--gold)}
+    .page-title{font-family:var(--serif);font-size:clamp(2.4rem,5vw,3.8rem);font-weight:400;letter-spacing:-.02em;line-height:1.1;margin-bottom:1rem}
+    .page-sub{font-size:1rem;color:var(--muted);max-width:580px;line-height:1.8}
 
-    .page-body{padding:4rem 5rem 6rem}
-    .sec-hd{display:flex;align-items:center;gap:1rem;margin-bottom:2.5rem;margin-top:3.5rem}
+    .page-body{padding:4rem 4rem 6rem}
+
+    .sec-hd{display:flex;align-items:baseline;gap:1rem;margin-bottom:2rem;padding-bottom:.8rem;border-bottom:1px solid var(--border);margin-top:3.5rem}
     .sec-hd:first-child{margin-top:0}
-    .sec-n{font-family:var(--mono);font-size:.68rem;color:var(--gold);letter-spacing:.12em}
-    .sec-t{font-family:var(--serif);font-size:1.5rem;font-weight:500}
-    .sec-r{flex:1;height:1px;background:var(--border)}
+    .sec-n{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;color:var(--gold)}
+    .sec-t{font-family:var(--serif);font-size:1.8rem;font-weight:400;letter-spacing:-.01em}
 
-    .t-cols{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem}
-    .t-inst{font-size:.87rem;font-weight:600;color:var(--text);margin-bottom:.5rem;margin-top:1.6rem;
-      padding-left:.9rem;border-left:2px solid var(--accent-dim)}
+    .t-cols{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+
+    .t-inst{
+      font-size:.82rem;font-weight:600;letter-spacing:.03em;color:var(--text);
+      margin-bottom:.6rem;margin-top:2rem;padding:.4rem .8rem;
+      background:var(--bg2);border-left:3px solid var(--accent-dim);
+    }
     .t-inst:first-of-type{margin-top:0}
-    .t-inst.obu-inst{border-color:var(--gold);color:var(--gold-soft)}
+    .t-inst.obu-inst{border-color:var(--gold);background:var(--gold-bg);color:var(--gold)}
+    
+    .t-inst-role {
+      font-size: .8rem;
+      font-family: var(--mono);
+      color: var(--faint);
+      letter-spacing: .06em;
+      padding: .15rem .8rem .5rem;
+      margin-bottom: .4rem;
+    }
 
     .clist{list-style:none}
-    .clist li{display:grid;grid-template-columns:85px 1fr auto;gap:.8rem;align-items:baseline;padding:.45rem 0;border-bottom:1px solid rgba(36,48,40,.9);font-size:.83rem}
-    .ccode{font-family:var(--mono);font-size:.72rem;color:var(--accent)}
-    .cname{color:var(--muted)}
-    .cterm{font-family:var(--mono);font-size:.65rem;color:var(--muted);opacity:.6;white-space:nowrap}
+    .clist li{
+      display:grid;grid-template-columns:90px 1fr auto;gap:.8rem;
+      align-items:baseline;padding:.5rem 0;
+      border-bottom:1px solid var(--border);font-size:.92rem;
+    }
+    .cc{font-family:var(--mono);font-size:.73rem;color:var(--accent);white-space:nowrap}
+    .cn{color:var(--muted)}
+    .ct{font-family:var(--mono);font-size:.68rem;color:var(--faint);white-space:nowrap}
 
-    /* OBU future section */
-    .obu-future{margin-top:3.5rem;padding:2rem 2.4rem;
-      background:linear-gradient(135deg,rgba(24,32,25,.7),rgba(20,26,20,.5));
-      border:1px solid var(--accent-dim);border-radius:3px}
-    .obu-future h3{font-family:var(--serif);font-size:1.3rem;font-weight:500;color:var(--accent);margin-bottom:.6rem}
-    .obu-future p{font-size:.9rem;color:var(--muted);line-height:1.8;max-width:520px}
-    .obu-future .badge{display:inline-block;margin-top:.8rem;font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;padding:.3rem .8rem;border:1px solid var(--gold);border-radius:2px;color:var(--gold)}
+    /* OBU future banner */
+    .obu-banner{
+      margin-top:4rem;padding:2rem 2.4rem;
+      background:var(--accent-bg);border:1px solid var(--accent-dim);
+      border-left:4px solid var(--accent);border-radius:2px;
+      display:flex;align-items:flex-start;gap:1.4rem;
+    }
+    .obu-banner-icon{font-size:1.6rem;flex-shrink:0;margin-top:.1rem}
+    .obu-banner h3{font-family:var(--serif);font-size:1.3rem;font-weight:400;color:var(--accent);margin-bottom:.4rem}
+    .obu-banner p{font-size:.95rem;color:var(--muted);line-height:1.75}
+    .obu-pill{display:inline-block;margin-top:.7rem;font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;padding:.25rem .7rem;background:#fff;border:1px solid var(--gold-border);border-radius:2px;color:var(--gold)}
 
-    footer{padding:1.8rem 5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:var(--bg2)}
-    footer p{font-family:var(--mono);font-size:.68rem;color:var(--muted);opacity:.4}
+    footer{padding:1.6rem 4rem;border-top:1px solid var(--border);background:var(--bg2);display:flex;justify-content:space-between;align-items:center}
+    footer p{font-family:var(--mono);font-size:.7rem;color:var(--faint)}
 
     @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 
     @media(max-width:900px){
       nav{padding:1rem 1.5rem}.nav-links{gap:1.2rem}
-      .page-hero{padding:7rem 2rem 3rem}.page-body{padding:3rem 2rem 5rem}
-      .t-cols{grid-template-columns:1fr;gap:2rem}
-      footer{flex-direction:column;gap:.4rem;padding:1.5rem 2rem}
+      .page-hero,.page-body{padding-left:1.8rem;padding-right:1.8rem}
+      .t-cols{grid-template-columns:1fr}
+      footer{flex-direction:column;gap:.4rem;padding:1.2rem 1.8rem;text-align:center}
     }
   </style>
 </head>
 <body>
   <nav>
-    <a class="nav-name" href="index.html">Chaoyang Gao <em>(Kevin)</em></a>
+    <a class="nav-name" href="index.html">Chaoyang Gao (Kevin)</a>
     <ul class="nav-links">
       <li><a href="index.html">About</a></li>
-      <li><a href="research.html">Research</a></li>
       <li><a href="teaching.html" class="active">Teaching</a></li>
       <li><a href="contact.html">Contact</a></li>
+      <li><a href="CV_Gao.pdf" target="_blank">CV</a></li>
     </ul>
   </nav>
 
   <div class="page-hero">
-    <div class="hero-inner">
-      <div class="eyebrow"><div class="eyebrow-line"></div><span>Education</span></div>
-      <h1 class="page-title">Teaching</h1>
-      <p class="page-sub">I have taught mathematics at UC Riverside, California Baptist University, and Biola University — ranging from precalculus through graduate-level topology. Beginning Fall 2025 at Oklahoma Baptist University.</p>
-    </div>
+    <div class="hero-label">Education</div>
+    <h1 class="page-title">Teaching</h1>
+    <p class="page-sub">I have taught mathematics at UC Riverside, California Baptist University, and Biola University — from precalculus through graduate-level topology. Joining Oklahoma Baptist University as faculty in Fall 2026.</p>
   </div>
 
   <div class="page-body">
 
-    <div class="sec-hd"><span class="sec-n">01</span><h2 class="sec-t">Instructor of Record</h2><div class="sec-r"></div></div>
+    <div class="sec-hd"><span class="sec-n">01</span><h2 class="sec-t">Instructor</h2></div>
     <div class="t-cols">
       <div>
-        <div class="t-inst">California Baptist University, Riverside CA</div>
+        <div class="t-inst">Oklahoma Baptist University - Shawnee, OK</div>
+        <div class="t-inst-role">Assistant Professor</div>
         <ul class="clist">
-          <li><span class="ccode">MAT 115</span><span class="cname">Intermediate Algebra</span><span class="cterm">Fa24, Fa25</span></li>
-          <li><span class="ccode">MAT 342</span><span class="cname">Multivariable Calculus & DEs</span><span class="cterm">Sp25, Sp26</span></li>
+          <li><span class="cc">MATH 1021</span><span class="cn">Support for College Algebra</span><span class="ct">Fa26</span></li>
+          <li><span class="cc">MATH 1033</span><span class="cn">Contemporary Mathematics</span><span class="ct">Fa26</span></li>
+          <li><span class="cc">MATH 7B</span><span class="cn">College Algebra</span><span class="ct">Fa26</span></li>
         </ul>
       </div>
       <div>
         <div class="t-inst">University of California, Riverside</div>
+        <div class="t-inst-role">Associate Instructor</div>
         <ul class="clist">
-          <li><span class="ccode">MATH 6A</span><span class="cname">Precalculus: Functions I</span><span class="cterm">Su23</span></li>
-          <li><span class="ccode">MATH 6B</span><span class="cname">Precalculus: Functions II</span><span class="cterm">Wi26</span></li>
-          <li><span class="ccode">MATH 7B</span><span class="cname">Calculus for Life Sciences II</span><span class="cterm">Su25</span></li>
-          <li><span class="ccode">MATH 022</span><span class="cname">Calculus for Business</span><span class="cterm">Su25</span></li>
-          <li><span class="ccode">MATH 197</span><span class="cname">Undergraduate Research</span><span class="cterm">Sp25</span></li>
+          <li><span class="cc">MATH 6A</span><span class="cn">Precalculus: Intro to Functions I</span><span class="ct">Su23</span></li>
+          <li><span class="cc">MATH 6B</span><span class="cn">Precalculus: Intro to Functions II</span><span class="ct">Wi26</span></li>
+          <li><span class="cc">MATH 7B</span><span class="cn">Calculus for Life Sciences II</span><span class="ct">Su25</span></li>
+          <li><span class="cc">MATH 022</span><span class="cn">Calculus for Business</span><span class="ct">Su25</span></li>
+          <li><span class="cc">MATH 197</span><span class="cn">Undergraduate Research</span><span class="ct">Sp25</span></li>
+        </ul>
+      </div>
+      <div>
+        <div class="t-inst">California Baptist University — Riverside, CA</div>
+        <div class="t-inst-role">Adjunct Professor</div>
+        <ul class="clist">
+          <li><span class="cc">MAT 115</span><span class="cn">Intermediate Algebra</span><span class="ct">Fa24, Fa25</span></li>
+          <li><span class="cc">MAT 342</span><span class="cn">Multivariable Calculus & DEs</span><span class="ct">Sp25, Sp26</span></li>
         </ul>
       </div>
     </div>
 
-    <div class="sec-hd"><span class="sec-n">02</span><h2 class="sec-t">Teaching Assistant</h2><div class="sec-r"></div></div>
+    <div class="sec-hd"><span class="sec-n">02</span><h2 class="sec-t">Teaching Assistant</h2></div>
     <div class="t-cols">
       <div>
         <div class="t-inst">University of California, Riverside</div>
         <ul class="clist">
-          <li><span class="ccode">MATH 6A/B</span><span class="cname">Precalculus I & II</span><span class="cterm">Su23–Sp25</span></li>
-          <li><span class="ccode">MATH 7A/B</span><span class="cname">Calculus for Life Sciences I & II</span><span class="cterm">Sp23–Sp26</span></li>
-          <li><span class="ccode">MATH 9A/B</span><span class="cname">First Year Calculus I & II</span><span class="cterm">Fa24–Sp26</span></li>
-          <li><span class="ccode">MATH 10A/B</span><span class="cname">Calculus of Several Variables I & II</span><span class="cterm">Wi25, Sp25</span></li>
-          <li><span class="ccode">MATH 022</span><span class="cname">Calculus for Business</span><span class="cterm">Wi22, Fa23</span></li>
-          <li><span class="ccode">MATH 145B</span><span class="cname">Topology II</span><span class="cterm">Sp26</span></li>
-          <li><span class="ccode">MATH 165A</span><span class="cname">Complex Variables I</span><span class="cterm">Wi24</span></li>
+          <li><span class="cc">MATH 6A</span><span class="cn">Precalculus: Intro to Functions I</span><span class="ct">Su23</span></li>
+	  <li><span class="cc">MATH 6B</span><span class="cn">Precalculus: Intro to Functions II</span><span class="ct">Wi24, Sp25</span></li>
+          <li><span class="cc">MATH 7A</span><span class="cn">Calculus for Life Sciences I</span><span class="ct">Sp23</span></li>
+          <li><span class="cc">MATH 7B</span><span class="cn">Calculus for Life Sciences II</span><span class="ct">Fa22, Fa23, Sp26</span></li>
+          <li><span class="cc">MATH 9A</span><span class="cn">First Year Calculus I</span><span class="ct">Fa24, Fa25, Sp26</span></li>
+          <li><span class="cc">MATH 9B</span><span class="cn">First Year Calculus II</span><span class="ct">Wi25</span></li>
+          <li><span class="cc">MATH 10A</span><span class="cn">Calculus of Several Variables I</span><span class="ct">Sp25</span></li>
+          <li><span class="cc">MATH 10B</span><span class="cn">Calculus of Several Variables II</span><span class="ct">Wi25</span></li>
+          <li><span class="cc">MATH 022</span><span class="cn">Calculus for Business</span><span class="ct">Wi22, Fa23</span></li>
+          <li><span class="cc">MATH 145B</span><span class="cn">Topology II</span><span class="ct">Sp26</span></li>
+          <li><span class="cc">MATH 165A</span><span class="cn">Intro to Complex Variables I</span><span class="ct">Wi24</span></li>
         </ul>
       </div>
       <div>
-        <div class="t-inst">Biola University, La Mirada CA</div>
+        <div class="t-inst">Biola University — La Mirada, CA</div>
         <ul class="clist">
-          <li><span class="ccode">MATH 103</span><span class="cname">Calculus for Management Science</span><span class="cterm">—</span></li>
-          <li><span class="ccode">MATH 204</span><span class="cname">Intro to Abstract Mathematics</span><span class="cterm">—</span></li>
-          <li><span class="ccode">MATH 291</span><span class="cname">Linear Algebra</span><span class="cterm">—</span></li>
+          <li><span class="cc">MATH 103</span><span class="cn">Calculus for Management Science</span><span class="ct">—</span></li>
+          <li><span class="cc">MATH 204</span><span class="cn">Intro to Abstract Mathematics</span><span class="ct">—</span></li>
+          <li><span class="cc">MATH 291</span><span class="cn">Linear Algebra</span><span class="ct">—</span></li>
         </ul>
       </div>
     </div>
 
-    <div class="obu-future">
-      <h3>Oklahoma Baptist University — Fall 2025</h3>
-      <p>Joining the mathematics faculty at OBU in Shawnee, Oklahoma. I look forward to teaching undergraduate mathematics and continuing research in differential geometry and related areas.</p>
-      <span class="badge">Incoming Faculty · Fall 2025</span>
+    <div class="obu-banner">
+      <div class="obu-banner-icon">🌿</div>
+      <div>
+        <h3>Oklahoma Baptist University — Fall 2026</h3>
+        <p>Joining the mathematics faculty at OBU in Shawnee, Oklahoma. I look forward to teaching undergraduate mathematics and developing courses that connect rigorous theory with student engagement.</p>
+        <span class="obu-pill">Incoming Faculty · Fall 2026</span>
+      </div>
     </div>
 
   </div>
 
   <footer>
     <p>Chaoyang Gao (Kevin) · Mathematics</p>
-    <p>Updated 2025</p>
+    <p>Updated 2026</p>
   </footer>
 </body>
 </html>

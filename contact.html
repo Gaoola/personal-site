@@ -3,92 +3,106 @@
 <head>
   <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>Contact — Chaoyang Gao (Kevin)</title>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{
-      --bg:#0d1210;--bg2:#111a13;--bg3:#182019;--border:#243028;
-      --text:#e6ebe6;--muted:#7d9180;
-      --accent:#6aab72;--accent-dim:#3d6b43;
-      --gold:#c9963a;--gold-soft:#e8c472;--stone:#9e8660;
-      --serif:'EB Garamond',Georgia,serif;--sans:'Outfit',sans-serif;--mono:'JetBrains Mono',monospace;
+      --bg:#f7f3ee;--bg2:#f0ebe3;--bg3:#e8e1d7;--border:#d6cfc4;
+      --text:#1a1a18;--muted:#6b6560;--faint:#9c958d;
+      --accent:#2d6e35;--accent-dim:#c8deca;--accent-bg:#edf5ee;
+      --gold:#a07820;--gold-bg:#fdf6e3;--gold-border:#e8d49a;
+      --serif:'DM Serif Display',Georgia,serif;
+      --sans:'DM Sans',sans-serif;
+      --mono:'DM Mono',monospace;
     }
     html{scroll-behavior:smooth}
-    body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:300;line-height:1.75;overflow-x:hidden;min-height:100vh;display:flex;flex-direction:column}
+    body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:18px;font-weight:300;line-height:1.75;overflow-x:hidden;min-height:100vh;display:flex;flex-direction:column}
 
-    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 3.5rem;background:rgba(13,18,16,.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
-    .nav-name{font-family:var(--serif);font-size:1.1rem;color:var(--text);text-decoration:none}
-    .nav-name em{font-style:italic;color:var(--accent)}
-    .nav-links{display:flex;gap:2.2rem;list-style:none}
-    .nav-links a{font-size:.75rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--muted);transition:color .2s}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 4rem;background:rgba(247,243,238,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+    .nav-name{font-family:var(--sans);font-size:.95rem;font-weight:600;letter-spacing:-.01em;color:var(--text);text-decoration:none}
+    .nav-links{display:flex;gap:2rem;list-style:none}
+    .nav-links a{font-size:.78rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--muted);transition:color .15s}
     .nav-links a:hover,.nav-links a.active{color:var(--accent)}
 
-    .page-body{flex:1;display:flex;align-items:center;justify-content:center;padding:10rem 5rem 6rem;position:relative;overflow:hidden}
-    .page-body::before{content:'';position:absolute;inset:0;pointer-events:none;
-      background:radial-gradient(ellipse 50% 60% at 25% 40%,rgba(106,171,114,.07) 0%,transparent 60%),
-                 radial-gradient(ellipse 40% 40% at 85% 70%,rgba(201,150,58,.05) 0%,transparent 55%)}
+    .page-body{
+      flex:1;display:flex;align-items:center;justify-content:center;
+      padding:9rem 4rem 5rem;
+    }
+    .wrap{
+      display:grid;grid-template-columns:1fr 1fr;gap:7rem;
+      max-width:860px;width:100%;
+      opacity:0;animation:fadeUp .6s .05s ease forwards;
+    }
 
-    .wrap{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start;position:relative;z-index:1;max-width:900px;width:100%;opacity:0;animation:fadeUp .7s .05s ease forwards}
+    .hero-label{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:1.4rem}
+    .hero-label::before{content:'';display:block;width:24px;height:1px;background:var(--accent)}
+    .page-title{font-family:var(--serif);font-size:clamp(2.4rem,5vw,3.6rem);font-weight:400;letter-spacing:-.02em;line-height:1.1;margin-bottom:1.2rem}
+    .page-sub{font-size:1rem;color:var(--muted);line-height:1.85}
 
-    .eyebrow{display:flex;align-items:center;gap:.8rem;margin-bottom:1.2rem}
-    .eyebrow-line{width:28px;height:1px;background:var(--accent)}
-    .eyebrow span{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
-    .page-title{font-family:var(--serif);font-size:clamp(2.2rem,4vw,3.2rem);font-weight:500;line-height:1.2;margin-bottom:1.2rem}
-    .page-sub{font-size:.97rem;color:var(--muted);line-height:1.85}
+    /* divider */
+    .divider{height:1px;background:var(--border);margin:.4rem 0}
 
-    .cards{display:flex;flex-direction:column;gap:1rem}
-    .cc{display:flex;align-items:center;gap:1.2rem;padding:1.2rem 1.4rem;background:var(--bg3);border:1px solid var(--border);border-radius:3px;text-decoration:none;color:var(--text);transition:border-color .2s,transform .2s}
-    .cc:hover{border-color:var(--accent);transform:translateX(4px)}
-    .cc.gold-card{border-color:#3a2808;background:rgba(20,14,4,.6)}
+    /* contact cards */
+    .cards{display:flex;flex-direction:column;gap:.7rem;justify-content:center}
+    .cc{
+      display:flex;align-items:center;gap:1rem;
+      padding:1.1rem 1.3rem;border-radius:2px;
+      text-decoration:none;color:var(--text);
+      background:var(--bg2);border:1px solid var(--border);
+      transition:border-color .15s,transform .15s;
+    }
+    .cc:hover{border-color:var(--accent);transform:translateX(3px)}
+    .cc.gold-card{background:var(--gold-bg);border-color:var(--gold-border)}
     .cc.gold-card:hover{border-color:var(--gold)}
-    .ci{width:40px;height:40px;flex-shrink:0;background:var(--bg2);border:1px solid var(--border);border-radius:2px;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:border-color .2s}
-    .cc:hover .ci{border-color:var(--accent)}
-    .cc.gold-card:hover .ci{border-color:var(--gold)}
-    .clbl{font-family:var(--mono);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.2rem}
-    .cc.gold-card .clbl{color:var(--gold-soft)}
+    .ci{
+      width:38px;height:38px;flex-shrink:0;
+      background:var(--bg);border:1px solid var(--border);border-radius:2px;
+      display:flex;align-items:center;justify-content:center;font-size:.95rem;
+    }
+    .cc.gold-card .ci{background:var(--gold-bg)}
+    .clbl{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.15rem}
+    .cc.gold-card .clbl{color:var(--gold)}
     .cval{font-size:.9rem;color:var(--muted)}
 
-    .divider{height:1px;background:var(--border);margin:.3rem 0}
-
-    footer{padding:1.8rem 5rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:var(--bg2)}
-    footer p{font-family:var(--mono);font-size:.68rem;color:var(--muted);opacity:.4}
+    footer{padding:1.6rem 4rem;border-top:1px solid var(--border);background:var(--bg2);display:flex;justify-content:space-between;align-items:center}
+    footer p{font-family:var(--mono);font-size:.7rem;color:var(--faint)}
 
     @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 
     @media(max-width:900px){
       nav{padding:1rem 1.5rem}.nav-links{gap:1.2rem}
-      .page-body{padding:8rem 2rem 5rem}
+      .page-body{padding:8rem 1.8rem 4rem}
       .wrap{grid-template-columns:1fr;gap:3rem}
-      footer{flex-direction:column;gap:.4rem;padding:1.5rem 2rem}
+      footer{flex-direction:column;gap:.4rem;padding:1.2rem 1.8rem;text-align:center}
     }
   </style>
 </head>
 <body>
   <nav>
-    <a class="nav-name" href="index.html">Chaoyang Gao <em>(Kevin)</em></a>
+    <a class="nav-name" href="index.html">Chaoyang Gao (Kevin)</a>
     <ul class="nav-links">
       <li><a href="index.html">About</a></li>
-      <li><a href="research.html">Research</a></li>
       <li><a href="teaching.html">Teaching</a></li>
       <li><a href="contact.html" class="active">Contact</a></li>
+      <li><a href="CV_Gao.pdf" target="_blank">CV</a></li>
     </ul>
   </nav>
 
   <div class="page-body">
     <div class="wrap">
       <div>
-        <div class="eyebrow"><div class="eyebrow-line"></div><span>Get in touch</span></div>
+        <div class="hero-label">Get in touch</div>
         <h1 class="page-title">Contact</h1>
         <p class="page-sub">Happy to discuss mathematics, research collaborations, or questions about graduate school and geometry. I try to respond to all messages promptly.</p>
       </div>
       <div class="cards">
-        <a class="cc" href="mailto:cgao@ucr.edu">
+        <a class="cc" href="mailto:chaoyang.gao@okbu.edu">
           <div class="ci">✉</div>
-          <div><div class="clbl">Email</div><div class="cval">cgao@ucr.edu</div></div>
+          <div><div class="clbl">Email</div><div class="cval">chaoyang.gao@okbu.edu</div></div>
         </a>
         <a class="cc gold-card" href="https://www.okbu.edu" target="_blank">
           <div class="ci">🌿</div>
-          <div><div class="clbl">Incoming Institution</div><div class="cval">Oklahoma Baptist University · Fall 2025</div></div>
+          <div><div class="clbl">Incoming Institution</div><div class="cval">Oklahoma Baptist University · Fall 2026</div></div>
         </a>
         <a class="cc" href="https://mathdept.ucr.edu" target="_blank">
           <div class="ci">🎓</div>
@@ -96,20 +110,19 @@
         </a>
         <a class="cc" href="https://sites.google.com/view/brian-collier/home" target="_blank">
           <div class="ci">🔬</div>
-          <div><div class="clbl">Advisor</div><div class="cval">Dr. Brian Collier</div></div>
+          <div><div class="clbl">Ph.D. Advisor</div><div class="cval">Dr. Brian Collier</div></div>
         </a>
-        <div class="divider"></div>
-        <a class="cc" href="https://sites.google.com/view/cygao/about" target="_blank">
-          <div class="ci">🔗</div>
-          <div><div class="clbl">Previous Site</div><div class="cval">Google Sites</div></div>
-        </a>
+	<a class="cc" href="CV_Gao.pdf" target="_blank">
+  	  <div class="ci">📄</div>
+  	  <div><div class="clbl">Curriculum Vitae</div><div class="cval">Curriculum Vitae</div></div>
+	</a>
       </div>
     </div>
   </div>
 
   <footer>
     <p>Chaoyang Gao (Kevin) · Mathematics</p>
-    <p>Updated 2025</p>
+    <p>Updated 2026</p>
   </footer>
 </body>
 </html>
