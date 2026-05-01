@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Sample Degree Plan — Chaoyang Gao (Kevin)</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#f7f3ee;--bg2:#f0ebe3;--bg3:#e8e1d7;--border:#d6cfc4;
+      --text:#1a1a18;--muted:#6b6560;--faint:#9c958d;
+      --accent:#2d6e35;--accent-dim:#c8deca;--accent-bg:#edf5ee;
+      --gold:#a07820;--gold-bg:#fdf6e3;--gold-border:#e8d49a;
+      --serif:'DM Serif Display',Georgia,serif;
+      --sans:'DM Sans',sans-serif;
+      --mono:'DM Mono',monospace;
+    }
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:18px;font-weight:300;line-height:1.75;overflow-x:hidden;min-height:100vh}
+
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 4rem;background:rgba(247,243,238,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+    .nav-name{font-family:var(--sans);font-size:.95rem;font-weight:600;letter-spacing:-.01em;color:var(--text);text-decoration:none}
+    .nav-links{display:flex;gap:2rem;list-style:none}
+    .nav-links a{font-size:.78rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--muted);transition:all .2s}
+    .nav-links a:hover{color:var(--accent)}
+
+    .page-hero{padding:8rem 4rem 2rem;border-bottom:1px solid var(--border)}
+    .hero-label{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem}
+    .hero-label::before{content:'';display:block;width:24px;height:1px;background:var(--accent)}
+    .page-title{font-family:var(--serif);font-size:clamp(2.4rem,5vw,3.8rem);font-weight:400;letter-spacing:-.02em;line-height:1.1;margin-bottom:.5rem}
+    .page-sub{font-size:.95rem;color:var(--muted);margin-bottom:2rem}
+
+    .page-body{padding:3rem 4rem 5rem}
+
+    .plan-grid{display:flex;flex-direction:column;gap:1.5rem;margin-top:2rem}
+    .year-card{
+      background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:1.4rem;
+      transition:all .2s;
+    }
+    .year-card:hover{border-color:var(--accent);box-shadow:0 2px 8px rgba(45,110,53,.1)}
+    .year-title{font-family:var(--serif);font-size:1.1rem;margin-bottom:1rem;color:var(--accent)}
+    .course-list{list-style:none}
+    .course-item{
+      padding:.6rem 0;border-bottom:1px solid var(--border);font-size:.95rem;color:var(--muted);
+      display:flex;align-items:center;gap:.6rem;
+    }
+    .course-item:last-child{border-bottom:none}
+    .course-dot{width:4px;height:4px;border-radius:50%;background:var(--accent);flex-shrink:0}
+
+    .back-btn{
+      display:inline-block;padding:.6rem 1.4rem;background:transparent;border:1.5px solid var(--border);
+      border-radius:2px;color:var(--muted);text-decoration:none;font-size:.8rem;
+      font-weight:500;letter-spacing:.04em;cursor:pointer;transition:all .2s;
+      margin-top:2rem;
+    }
+    .back-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+    /* Progress Bar */
+    .progress-section{margin-bottom:2.5rem}
+    .progress-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem}
+    .progress-title{font-family:var(--mono);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+    .progress-stats{font-family:var(--mono);font-size:.85rem;color:var(--accent);font-weight:500}
+    .progress-bar{height:8px;background:var(--bg3);border-radius:4px;overflow:hidden}
+    .progress-fill{height:100%;background:var(--accent);border-radius:4px;transition:width .5s ease}
+    .page-title-row{display:flex;justify-content:space-between;align-items:flex-start;gap:2rem;flex-wrap:wrap}
+    .page-title-row .page-title{margin-bottom:0}
+    .page-title-row .progress-section{margin-bottom:0;min-width:280px}
+
+    /* Course Table */
+    .course-table{width:100%;border-collapse:collapse;margin-top:.8rem}
+    .course-table th{text-align:left;font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:.6rem 0;border-bottom:1px solid var(--border)}
+    .course-table td{padding:.7rem 0;border-bottom:1px solid var(--border);font-size:.95rem;color:var(--text)}
+    .course-table td:first-child{font-weight:500;width:120px}
+    .course-table td:nth-child(2){text-align:center;font-style:italic;color:var(--muted)}
+    .course-table td:last-child{text-align:right;font-family:var(--mono);font-size:.85rem;color:var(--muted);width:60px}
+    .course-table tr:last-child td{border-bottom:none}
+
+    footer{padding:1.6rem 4rem;border-top:1px solid var(--border);background:var(--bg2);display:flex;justify-content:space-between;align-items:center}
+    footer p{font-family:var(--mono);font-size:.7rem;color:var(--faint)}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+    @media(max-width:900px){
+      nav{padding:1rem 1.5rem}
+      .page-hero,.page-body{padding-left:1.8rem;padding-right:1.8rem}
+      footer{flex-direction:column;gap:.4rem;padding:1.2rem 1.8rem;text-align:center}
+    }
+
+    @media(max-width:600px){
+      .year-card{flex-basis:50%}
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="nav-name" href="index.html">Chaoyang Gao (Kevin)</a>
+    <ul class="nav-links">
+      <li><a href="index.html">About</a></li>
+      <li><a href="teaching.html">Teaching</a></li>
+      <li><a href="advising.html">Advising</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-hero">
+    <div class="hero-label">Sample Degree Plan</div>
+    <div class="page-title-row">
+      <h1 class="page-title" id="majorName">Mathematics, BS</h1>
+      <div class="progress-section" id="progressSection"></div>
+    </div>
+    <p class="page-sub" id="majorSubtitle">Bachelor of Science — Oklahoma Baptist University</p>
+  </div>
+
+  <div class="page-body">
+    <div class="plan-grid" id="planGrid"></div>
+    <a href="advising.html" class="back-btn">← Back to Advising</a>
+  </div>
+
+  <footer>
+    <p>Chaoyang Gao (Kevin) · Mathematics</p>
+    <p>Updated 2026</p>
+  </footer>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const majorId = urlParams.get('major');
+
+    const degreePlans = {
+      'math-bs': {
+        name: 'Mathematics, BS',
+        subtitle: 'Bachelor of Science',
+        plan: {
+          freshmanFall: [
+            { code: 'MATH 2013', name: 'Analytic Geometry & Calculus I', units: 3 },
+            { code: 'ENGL 1153', name: 'English Composition', units: 3 },
+            { code: 'BIBL 1013', name: 'Intro to Christian Scripture', units: 3 },
+            { code: 'PHYS 2013', name: 'Physics I', units: 3 },
+            { code: 'HIST 2013', name: 'European Civilization: History', units: 3 }
+          ],
+          freshmanSpring: [
+            { code: 'MATH 2023', name: 'Analytic Geometry & Calculus II', units: 3 },
+            { code: 'ENGL 1163', name: 'Composition & Classical Literature', units: 3 },
+            { code: 'BIBL 1023', name: 'Christian Theology & Ethics', units: 3 },
+            { code: 'PHYS 2023', name: 'Physics II', units: 3 },
+            { code: 'HIST 2023', name: 'Modern West: History', units: 3 }
+          ],
+          sophomoreFall: [
+            { code: 'MATH 2033', name: 'Analytic Geometry & Calculus III', units: 3 },
+            { code: 'MATH 2103', name: 'Discrete Mathematics', units: 3 },
+            { code: 'MATH 3203', name: 'Linear Algebra', units: 3 },
+            { code: 'COMS 1093', name: 'Speech Communication', units: 3 },
+            { code: 'FNAR 2063', name: 'Arts & Western Culture', units: 3 }
+          ],
+          sophomoreSpring: [
+            { code: 'MATH 2043', name: 'Analytic Geometry & Calculus IV', units: 3 },
+            { code: 'MATH 3243', name: 'Differential Equations', units: 3 },
+            { code: 'MATH 3503', name: 'Computational Statistics', units: 3 },
+            { code: 'PHIL 1043', name: 'Intro to Philosophy', units: 3 },
+            { code: 'Elective', name: 'Elective', units: 3 }
+          ],
+          juniorFall: [
+            { code: 'MATH 3013', name: 'Intro to Probability & Statistics', units: 3 },
+            { code: 'MATH 4103', name: 'Intro to Real Analysis', units: 3 },
+            { code: 'MATH 3133', name: 'Modern Geometry', units: 3 },
+            { code: 'Elective', name: 'Minor Course', units: 3 },
+            { code: 'Elective', name: 'Minor Course', units: 3 }
+          ],
+          juniorSpring: [
+            { code: 'MATH 4133', name: 'Intro to Modern Algebra', units: 3 },
+            { code: 'MATH 4113', name: 'History & Foundations of Math', units: 3 },
+            { code: 'MATH 4123', name: 'Intro to Complex Variables', units: 3 },
+            { code: 'Elective', name: 'Minor Course', units: 3 },
+            { code: 'Elective', name: 'Minor Course', units: 3 }
+          ],
+          seniorFall: [
+            { code: 'MATH 4183', name: 'Numerical Analysis', units: 3 },
+            { code: 'MATH 4143', name: 'Applied Cryptography', units: 3 },
+            { code: 'Elective', name: 'Math Elective', units: 3 },
+            { code: 'Elective', name: 'Minor Course', units: 3 }
+          ],
+          seniorSpring: [
+            { code: 'MATH 4409', name: 'Senior Mathematics Seminar', units: 1 },
+            { code: 'Elective', name: 'Math Elective', units: 3 },
+            { code: 'Elective', name: 'Minor Course', units: 3 },
+            { code: 'Elective', name: 'Elective', units: 3 }
+          ]
+        }
+      },
+      'math-ba': {
+        name: 'Mathematics, BA',
+        subtitle: 'Bachelor of Arts',
+        plan: {
+          freshmanFall: [
+            { code: 'MATH 2013', name: 'Analytic Geometry & Calculus I', units: 3 },
+            { code: 'ENGL 1153', name: 'English Composition', units: 3 },
+            { code: 'BIBL 1013', name: 'Intro to Christian Scripture', units: 3 },
+            { code: 'Lab Science', name: 'Laboratory Science', units: 4 },
+            { code: 'PHED 1001', name: 'The Wellness Lifestyle', units: 1 }
+          ],
+          freshmanSpring: [
+            { code: 'MATH 2023', name: 'Analytic Geometry & Calculus II', units: 3 },
+            { code: 'ENGL 1163', name: 'Composition & Classical Literature', units: 3 },
+            { code: 'BIBL 1023', name: 'Christian Theology & Ethics', units: 3 },
+            { code: 'Lab Science', name: 'Laboratory Science', units: 4 },
+            { code: 'Elective', name: 'Elective', units: 3 }
+          ],
+          sophomoreFall: [
+            { code: 'MATH 2033', name: 'Analytic Geometry & Calculus III', units: 3 },
+            { code: 'MATH 2103', name: 'Discrete Mathematics', units: 3 },
+            { code: 'MATH 3203', name: 'Linear Algebra', units: 3 },
+            { code: 'WLNG 1013', name: 'World Language I', units: 3 },
+            { code: 'COMS 1093', name: 'Speech Communication', units: 3 }
+          ],
+          sophomoreSpring: [
+            { code: 'MATH 2043', name: 'Analytic Geometry & Calculus IV', units: 3 },
+            { code: 'MATH 3243', name: 'Differential Equations', units: 3 },
+            { code: 'MATH 3503', name: 'Computational Statistics', units: 3 },
+            { code: 'WLNG 1023', name: 'World Language II', units: 3 },
+            { code: 'PHIL 1043', name: 'Intro to Philosophy', units: 3 }
+          ],
+          juniorFall: [
+            { code: 'MATH 3013', name: 'Intro to Probability & Statistics', units: 3 },
+            { code: 'MATH 4103', name: 'Intro to Real Analysis', units: 3 },
+            { code: 'Elective', name: 'Math Elective', units: 3 },
+            { code: 'Elective', name: 'Minor Course', units: 3 },
+            { code: 'Elective', name: 'Minor Course', units: 3 }
+          ],
+          juniorSpring: [
+            { code: 'MATH 4133', name: 'Intro to Modern Algebra', units: 3 },
+            { code: 'MATH 4113', name: 'History & Foundations of Math', units: 3 },
+            { code: 'Elective', name: 'Math Elective', units: 3 },
+            { code: 'Elective', name: 'Minor Course', units: 3 },
+            { code: 'Elective', name: 'Minor Course', units: 3 }
+          ],
+          seniorFall: [
+            { code: 'Elective', name: 'Math Elective', units: 3 },
+            { code: 'Elective', name: 'Minor Course', units: 3 },
+            { code: 'Elective', name: 'Elective', units: 3 },
+            { code: 'Elective', name: 'Elective', units: 3 }
+          ],
+          seniorSpring: [
+            { code: 'MATH 4409', name: 'Senior Mathematics Seminar', units: 1 },
+            { code: 'Elective', name: 'Minor Course', units: 3 },
+            { code: 'Elective', name: 'Minor Course', units: 3 },
+            { code: 'Elective', name: 'Elective', units: 3 }
+          ]
+        }
+      },
+      'math-actuarial': {
+        name: 'Applied Mathematics: Actuarial & Financial Math, BS',
+        subtitle: 'BS with Emphasis',
+        plan: {
+          freshmanFall: [
+            { code: 'MATH 2013', name: 'Analytic Geometry & Calculus I', units: 3 },
+            { code: 'ENGL 1153', name: 'English Composition', units: 3 },
+            { code: 'BIBL 1013', name: 'Intro to Christian Scripture', units: 3 },
+            { code: 'ECON 2013', name: 'Principles of Economics: Macro', units: 3 },
+            { code: 'PHED 1001', name: 'The Wellness Lifestyle', units: 1 }
+          ],
+          freshmanSpring: [
+            { code: 'MATH 2023', name: 'Analytic Geometry & Calculus II', units: 3 },
+            { code: 'ENGL 1163', name: 'Composition & Classical Literature', units: 3 },
+            { code: 'BIBL 1023', name: 'Christian Theology & Ethics', units: 3 },
+            { code: 'ECON 2023', name: 'Principles of Economics: Micro', units: 3 },
+            { code: 'Elective', name: 'Elective', units: 3 }
+          ],
+          sophomoreFall: [
+            { code: 'MATH 2033', name: 'Analytic Geometry & Calculus III', units: 3 },
+            { code: 'MATH 2103', name: 'Discrete Mathematics', units: 3 },
+            { code: 'MATH 3203', name: 'Linear Algebra', units: 3 },
+            { code: 'ACCT 2013', name: 'Principles of Accounting I', units: 3 },
+            { code: 'CIS 2713', name: 'Intro to Programming (Python)', units: 3 }
+          ],
+          sophomoreSpring: [
+            { code: 'MATH 2043', name: 'Analytic Geometry & Calculus IV', units: 3 },
+            { code: 'MATH 3243', name: 'Differential Equations', units: 3 },
+            { code: 'MATH 3503', name: 'Computational Statistics', units: 3 },
+            { code: 'ACCT 2023', name: 'Principles of Accounting II', units: 3 },
+            { code: 'BSAD 2013', name: 'Technical Systems & Project Mgmt', units: 3 }
+          ],
+          juniorFall: [
+            { code: 'MATH 3013', name: 'Intro to Probability & Statistics', units: 3 },
+            { code: 'FIN 3403', name: 'Intro to Business Finance', units: 3 },
+            { code: 'FIN 3103', name: 'Portfolio Management', units: 3 },
+            { code: 'CIS 3103', name: 'Database Program Development', units: 3 },
+            { code: 'Elective', name: 'Elective', units: 3 }
+          ],
+          juniorSpring: [
+            { code: 'MATH 3421', name: 'Actuary Seminar I: Probability', units: 1 },
+            { code: 'FIN 4453', name: 'Financial Management', units: 3 },
+            { code: 'FIN 4553', name: 'Investments', units: 3 },
+            { code: 'MGMT 3203', name: 'Intro to Management', units: 3 },
+            { code: 'Elective', name: 'Elective', units: 3 }
+          ],
+          seniorFall: [
+            { code: 'MATH 4103', name: 'Intro to Real Analysis', units: 3 },
+            { code: 'MATH 4113', name: 'History & Foundations of Math', units: 3 },
+            { code: 'Elective', name: 'Math Elective', units: 3 },
+            { code: 'Elective', name: 'Elective', units: 3 }
+          ],
+          seniorSpring: [
+            { code: 'MATH 4421', name: 'Actuary Seminar II: Financial Math', units: 1 },
+            { code: 'MATH 4409', name: 'Senior Mathematics Seminar', units: 1 },
+            { code: 'Elective', name: 'Math Elective', units: 3 },
+            { code: 'Elective', name: 'Elective', units: 3 }
+          ]
+        }
+      },
+      'math-datasci': {
+        name: 'Applied Mathematics: Data Science, BS',
+        subtitle: 'BS with Emphasis',
+        plan: {
+          freshmanFall: [
+            { code: 'MATH 2013', name: 'Analytic Geometry & Calculus I', units: 3 },
+            { code: 'ENGL 1153', name: 'English Composition', units: 3 },
+            { code: 'BIBL 1013', name: 'Intro to Christian Scripture', units: 3 },
+            { code: 'ECON 2013', name: 'Principles of Economics: Macro', units: 3 },
+            { code: 'PHED 1001', name: 'The Wellness Lifestyle', units: 1 }
+          ],
+          freshmanSpring: [
+            { code: 'MATH 2023', name: 'Analytic Geometry & Calculus II', units: 3 },
+            { code: 'ENGL 1163', name: 'Composition & Classical Literature', units: 3 },
+            { code: 'BIBL 1023', name: 'Christian Theology & Ethics', units: 3 },
+            { code: 'ECON 2023', name: 'Principles of Economics: Micro', units: 3 },
+            { code: 'Elective', name: 'Elective', units: 3 }
+          ],
+          sophomoreFall: [
+            { code: 'MATH 2033', name: 'Analytic Geometry & Calculus III', units: 3 },
+            { code: 'MATH 2103', name: 'Discrete Mathematics', units: 3 },
+            { code: 'MATH 3203', name: 'Linear Algebra', units: 3 },
+            { code: 'CIS 2713', name: 'Intro to Programming (Python)', units: 3 },
+            { code: 'CIS 3103', name: 'Database Program Development', units: 3 }
+          ],
+          sophomoreSpring: [
+            { code: 'MATH 2043', name: 'Analytic Geometry & Calculus IV', units: 3 },
+            { code: 'MATH 3243', name: 'Differential Equations', units: 3 },
+            { code: 'MATH 3503', name: 'Computational Statistics', units: 3 },
+            { code: 'COMS 1093', name: 'Speech Communication', units: 3 },
+            { code: 'PHIL 1043', name: 'Intro to Philosophy', units: 3 }
+          ],
+          juniorFall: [
+            { code: 'MATH 3013', name: 'Intro to Probability & Statistics', units: 3 },
+            { code: 'CIS 3803', name: 'Intro to Data Science', units: 3 },
+            { code: 'CIS 3813', name: 'Advanced Data Science', units: 3 },
+            { code: 'MGMT 3203', name: 'Intro to Management', units: 3 },
+            { code: 'Elective', name: 'Elective', units: 3 }
+          ],
+          juniorSpring: [
+            { code: 'MATH 4103', name: 'Intro to Real Analysis', units: 3 },
+            { code: 'CIS 3823', name: 'Software Engineering', units: 3 },
+            { code: 'MGMT 3453', name: 'Project Management', units: 3 },
+            { code: 'Elective', name: 'Math Elective', units: 3 },
+            { code: 'Elective', name: 'Elective', units: 3 }
+          ],
+          seniorFall: [
+            { code: 'CIS 4103', name: 'Software Development Project I', units: 3 },
+            { code: 'MATH 4113', name: 'History & Foundations of Math', units: 3 },
+            { code: 'Elective', name: 'Math Elective', units: 3 },
+            { code: 'Elective', name: 'Elective', units: 3 }
+          ],
+          seniorSpring: [
+            { code: 'CIS 4203', name: 'Software Development Project II', units: 3 },
+            { code: 'MATH 4409', name: 'Senior Mathematics Seminar', units: 1 },
+            { code: 'Elective', name: 'Elective', units: 3 },
+            { code: 'Elective', name: 'Elective', units: 3 }
+          ]
+        }
+      },
+      'math-ed': {
+        name: 'Mathematics Education, Secondary, BSE',
+        subtitle: 'Bachelor of Science in Education',
+        plan: {
+          freshmanFall: [
+            { code: 'MATH 2013', name: 'Analytic Geometry & Calculus I', units: 3 },
+            { code: 'ENGL 1153', name: 'English Composition', units: 3 },
+            { code: 'BIBL 1013', name: 'Intro to Christian Scripture', units: 3 },
+            { code: 'EDUC 1051', name: 'Cornerstone of Teacher Education', units: 1 },
+            { code: 'Lab Science', name: 'Laboratory Science', units: 4 }
+          ],
+          freshmanSpring: [
+            { code: 'MATH 2023', name: 'Analytic Geometry & Calculus II', units: 3 },
+            { code: 'ENGL 1163', name: 'Composition & Classical Literature', units: 3 },
+            { code: 'BIBL 1023', name: 'Christian Theology & Ethics', units: 3 },
+            { code: 'EDUC 2113', name: 'Principles of Secondary Education', units: 3 },
+            { code: 'PHED 1001', name: 'The Wellness Lifestyle', units: 1 }
+          ],
+          sophomoreFall: [
+            { code: 'MATH 2033', name: 'Analytic Geometry & Calculus III', units: 3 },
+            { code: 'MATH 2103', name: 'Discrete Mathematics', units: 3 },
+            { code: 'MATH 3203', name: 'Linear Algebra', units: 3 },
+            { code: 'COMS 1093', name: 'Speech Communication', units: 3 },
+            { code: 'HIST 2013', name: 'European Civilization: History', units: 3 }
+          ],
+          sophomoreSpring: [
+            { code: 'MATH 2043', name: 'Analytic Geometry & Calculus IV', units: 3 },
+            { code: 'MATH 3243', name: 'Differential Equations', units: 3 },
+            { code: 'MATH 3503', name: 'Computational Statistics', units: 3 },
+            { code: 'EDUC 3143', name: 'Adolescent Development', units: 3 },
+            { code: 'HIST 2023', name: 'Modern West: History', units: 3 }
+          ],
+          juniorFall: [
+            { code: 'MATH 3013', name: 'Intro to Probability & Statistics', units: 3 },
+            { code: 'MATH 3133', name: 'Modern Geometry', units: 3 },
+            { code: 'MATH 4113', name: 'History & Foundations of Math', units: 3 },
+            { code: 'EDUC 3203', name: 'Educational Psychology', units: 3 },
+            { code: 'SPED 3023', name: 'Intro to Children with Exceptionalities', units: 3 }
+          ],
+          juniorSpring: [
+            { code: 'MATH 4133', name: 'Intro to Modern Algebra', units: 3 },
+            { code: 'MATH 4103', name: 'Intro to Real Analysis', units: 3 },
+            { code: 'EDUC 3723', name: 'Classroom Management 6-12', units: 3 },
+            { code: 'EDUC 3502', name: 'Principles of Middle School Education', units: 2 },
+            { code: 'FNAR 2063', name: 'Arts & Western Culture', units: 3 }
+          ],
+          seniorFall: [
+            { code: 'MATH 4409', name: 'Senior Mathematics Seminar', units: 1 },
+            { code: 'EDUC 3982', name: 'Special Methods of Teaching', units: 2 },
+            { code: 'EDUC L3982', name: 'Secondary Methods Lab', units: 1 },
+            { code: 'Elective', name: 'Math Elective', units: 3 },
+            { code: 'Elective', name: 'Elective', units: 3 }
+          ],
+          seniorSpring: [
+            { code: 'EDUC 4538', name: 'Student Teaching, Secondary', units: 10 },
+            { code: 'EDUC 4743', name: 'Pedagogy and Assessment Seminar', units: 3 }
+          ]
+        }
+      }
+    };
+
+    function renderPlan() {
+      const major = degreePlans[majorId];
+      if (!major) {
+        document.getElementById('majorName').textContent = 'Sample Not Found';
+        return;
+      }
+
+      document.getElementById('majorName').textContent = major.name;
+      document.getElementById('majorSubtitle').textContent = `${major.subtitle} — Oklahoma Baptist University`;
+
+      const grid = document.getElementById('planGrid');
+      const progressSection = document.getElementById('progressSection');
+      grid.innerHTML = '';
+
+      // Calculate total units
+      let totalUnits = 0;
+      const semesters = ['freshmanFall', 'freshmanSpring', 'sophomoreFall', 'sophomoreSpring', 'juniorFall', 'juniorSpring', 'seniorFall', 'seniorSpring'];
+      semesters.forEach(sem => {
+        const courses = major.plan[sem] || [];
+        courses.forEach(c => {
+          const units = parseInt(c.units) || 3;
+          totalUnits += units;
+        });
+      });
+
+      const requiredUnits = 120;
+      const progressPercent = Math.min((totalUnits / requiredUnits) * 100, 100);
+
+      // Progress bar in header
+      progressSection.innerHTML = `
+        <div class="progress-section">
+          <div class="progress-label">
+            <span class="progress-title">Degree Progress</span>
+            <span class="progress-stats">${totalUnits} / ${requiredUnits} units</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width:${progressPercent}%"></div>
+          </div>
+        </div>
+      `;
+
+      const semesterLabels = {
+        freshmanFall: 'Freshman Fall',
+        freshmanSpring: 'Freshman Spring',
+        sophomoreFall: 'Sophomore Fall',
+        sophomoreSpring: 'Sophomore Spring',
+        juniorFall: 'Junior Fall',
+        juniorSpring: 'Junior Spring',
+        seniorFall: 'Senior Fall',
+        seniorSpring: 'Senior Spring'
+      };
+
+      // Create 4 rows, each with 2 columns
+      const yearRows = [
+        ['freshmanFall', 'freshmanSpring'],
+        ['sophomoreFall', 'sophomoreSpring'],
+        ['juniorFall', 'juniorSpring'],
+        ['seniorFall', 'seniorSpring']
+      ];
+
+      yearRows.forEach((rowSemesters, rowIdx) => {
+        const row = document.createElement('div');
+        row.style.display = 'flex';
+        row.style.gap = '1.5rem';
+        row.style.width = '100%';
+        if (rowIdx > 0) row.style.marginTop = '1.5rem';
+
+        rowSemesters.forEach(sem => {
+          const courses = major.plan[sem] || [];
+          const card = document.createElement('div');
+          card.className = 'year-card';
+          card.style.flex = '1 1 50%';
+          card.style.minWidth = '0';
+          
+          let coursesHTML = '';
+          if (courses.length > 0) {
+            coursesHTML = `
+              <table class="course-table">
+                <thead>
+                  <tr>
+                    <th>Code</th>
+                    <th>Course Name</th>
+                    <th>Units</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${courses.map(course => `
+                    <tr>
+                      <td>${course.code || ''}</td>
+                      <td>${course.name || ''}</td>
+                      <td>${course.units}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            `;
+          } else {
+            coursesHTML = '<p style="color:var(--faint);font-style:italic;margin-top:.8rem">No courses added</p>';
+          }
+
+          card.innerHTML = `
+            <h3 class="year-title">${semesterLabels[sem]}</h3>
+            ${coursesHTML}
+          `;
+          row.appendChild(card);
+        });
+
+        grid.appendChild(row);
+      });
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', renderPlan);
+  </script>
+</body>
+</html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Your Plan — Chaoyang Gao (Kevin)</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#f7f3ee;--bg2:#f0ebe3;--bg3:#e8e1d7;--border:#d6cfc4;
+      --text:#1a1a18;--muted:#6b6560;--faint:#9c958d;
+      --accent:#2d6e35;--accent-dim:#c8deca;--accent-bg:#edf5ee;
+      --gold:#a07820;--gold-bg:#fdf6e3;--gold-border:#e8d49a;
+      --serif:'DM Serif Display',Georgia,serif;
+      --sans:'DM Sans',sans-serif;
+      --mono:'DM Mono',monospace;
+    }
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:18px;font-weight:300;line-height:1.75;overflow-x:hidden;min-height:100vh}
+
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 4rem;background:rgba(247,243,238,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+    .nav-name{font-family:var(--sans);font-size:.95rem;font-weight:600;letter-spacing:-.01em;color:var(--text);text-decoration:none}
+    .nav-links{display:flex;gap:2rem;list-style:none}
+    .nav-links a{font-size:.78rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--muted);transition:all .2s}
+    .nav-links a:hover{color:var(--accent)}
+
+    /* Password Screen */
+    #passwordScreen{position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:200;opacity:1;transition:opacity .3s}
+    #passwordScreen.hidden{display:none}
+
+    .password-box{
+      background:#fff;border:1px solid var(--border);border-radius:4px;padding:3rem;
+      max-width:380px;width:90%;box-shadow:0 4px 16px rgba(0,0,0,.08);
+      opacity:0;animation:fadeUp .5s .1s ease forwards;
+    }
+    .pw-label{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:block}
+    .pw-title{font-family:var(--serif);font-size:1.6rem;margin-bottom:.5rem;font-weight:400}
+    .pw-sub{font-size:.95rem;color:var(--muted);margin-bottom:2rem;line-height:1.7}
+    .pw-input{width:100%;padding:.8rem 1rem;border:1px solid var(--border);border-radius:2px;font-size:1rem;margin-bottom:1.2rem;font-family:var(--mono)}
+    .pw-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-bg)}
+    .pw-btn{width:100%;padding:.7rem 1rem;background:var(--accent);color:#fff;border:none;border-radius:2px;font-size:.9rem;font-weight:500;cursor:pointer;transition:all .2s}
+    .pw-btn:hover{background:#245929;transform:translateY(-1px)}
+    .pw-error{color:#d32f2f;font-size:.85rem;margin-top:.5rem}
+    .pw-back{color:var(--muted);font-size:.85rem;margin-top:1rem;text-align:center}
+    .pw-back a{color:var(--accent);text-decoration:none}
+    .pw-back a:hover{text-decoration:underline}
+
+    .page-hero{padding:8rem 4rem 2rem;border-bottom:1px solid var(--border)}
+    .hero-label{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem}
+    .hero-label::before{content:'';display:block;width:24px;height:1px;background:var(--accent)}
+    .page-title{font-family:var(--serif);font-size:clamp(2.4rem,5vw,3.8rem);font-weight:400;letter-spacing:-.02em;line-height:1.1;margin-bottom:.5rem}
+    .page-sub{font-size:.95rem;color:var(--muted);margin-bottom:2rem}
+
+    .page-body{padding:3rem 4rem 5rem}
+
+    .plan-grid{display:flex;flex-direction:column;gap:1.5rem;margin-top:2rem}
+    .year-card{
+      background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:1.4rem;
+      transition:all .2s;
+    }
+    .year-card:hover{border-color:var(--accent);box-shadow:0 2px 8px rgba(45,110,53,.1)}
+    .year-title{font-family:var(--serif);font-size:1.1rem;margin-bottom:1rem;color:var(--accent)}
+    .course-list{list-style:none}
+    .course-item{
+      padding:.6rem 0;border-bottom:1px solid var(--border);font-size:.95rem;color:var(--muted);
+      display:flex;align-items:center;gap:.6rem;
+    }
+    .course-item:last-child{border-bottom:none}
+    .course-dot{width:4px;height:4px;border-radius:50%;background:var(--accent);flex-shrink:0}
+
+    .logout-btn{
+      display:inline-block;padding:.6rem 1.4rem;background:transparent;border:1.5px solid var(--border);
+      border-radius:2px;color:var(--muted);text-decoration:none;font-size:.8rem;
+      font-weight:500;letter-spacing:.04em;cursor:pointer;transition:all .2s;
+      margin-top:2rem;
+    }
+    .logout-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+    /* Progress Bar */
+    .progress-section{margin-bottom:2.5rem}
+    .progress-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem}
+    .progress-title{font-family:var(--mono);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+    .progress-stats{font-family:var(--mono);font-size:.85rem;color:var(--accent);font-weight:500}
+    .progress-bar{height:8px;background:var(--bg3);border-radius:4px;overflow:hidden}
+    .progress-fill{height:100%;background:var(--accent);border-radius:4px;transition:width .5s ease}
+    .page-title-row{display:flex;justify-content:space-between;align-items:flex-start;gap:2rem;flex-wrap:wrap}
+    .page-title-row .page-title{margin-bottom:0}
+    .page-title-row .progress-section{margin-bottom:0;min-width:280px}
+
+    /* Course Table */
+    .course-table{width:100%;border-collapse:collapse;margin-top:.8rem}
+    .course-table th{text-align:left;font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);padding:.6rem 0;border-bottom:1px solid var(--border)}
+    .course-table td{padding:.7rem 0;border-bottom:1px solid var(--border);font-size:.95rem;color:var(--text)}
+    .course-table td:first-child{font-weight:500;width:120px}
+    .course-table td:nth-child(2){text-align:center;font-style:italic;color:var(--muted)}
+    .course-table td:last-child{text-align:right;font-family:var(--mono);font-size:.85rem;color:var(--muted);width:60px}
+    .course-table tr:last-child td{border-bottom:none}
+
+    footer{padding:1.6rem 4rem;border-top:1px solid var(--border);background:var(--bg2);display:flex;justify-content:space-between;align-items:center}
+    footer p{font-family:var(--mono);font-size:.7rem;color:var(--faint)}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+    @media(max-width:900px){
+      nav{padding:1rem 1.5rem}
+      .page-hero,.page-body{padding-left:1.8rem;padding-right:1.8rem}
+      footer{flex-direction:column;gap:.4rem;padding:1.2rem 1.8rem;text-align:center}
+    }
+
+    @media(max-width:600px){
+      .year-card{flex-basis:50%}
+    }
+  </style>
+</head>
+<body>
+  <div id="passwordScreen">
+    <div class="password-box">
+      <label class="pw-label">Secure Access</label>
+      <h2 class="pw-title">Welcome</h2>
+      <p class="pw-sub">Enter your password to view your course plan</p>
+      <input type="password" id="passwordInput" class="pw-input" placeholder="Enter password" />
+      <button class="pw-btn" onclick="checkPassword()">Unlock</button>
+      <div id="errorMsg" class="pw-error"></div>
+      <div class="pw-back"><a href="advising.html">← Back to Advising</a></div>
+    </div>
+  </div>
+
+  <nav>
+    <a class="nav-name" href="index.html">Chaoyang Gao (Kevin)</a>
+    <ul class="nav-links">
+      <li><a href="index.html">About</a></li>
+      <li><a href="teaching.html">Teaching</a></li>
+      <li><a href="advising.html">Advising</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div id="contentArea" style="display:none">
+    <div class="page-hero">
+      <div class="hero-label">Your Plan</div>
+      <div class="page-title-row">
+        <h1 class="page-title" id="studentName">Course Plan</h1>
+        <div class="progress-section" id="progressSection"></div>
+      </div>
+      <p class="page-sub" id="majorDisplay"></p>
+    </div>
+
+    <div class="page-body">
+      <div class="plan-grid" id="planGrid"></div>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>Chaoyang Gao (Kevin) · Mathematics</p>
+    <p>Updated 2026</p>
+  </footer>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const studentId = parseInt(urlParams.get('id'));
+    let currentStudent = null;
+
+    // Check if already authenticated
+    function checkAuthentication() {
+      const auth = sessionStorage.getItem(`student_${studentId}_auth`);
+      if (auth === 'true') {
+        showContent();
+      }
+    }
+
+    function checkPassword() {
+      const password = document.getElementById('passwordInput').value;
+      const students = JSON.parse(localStorage.getItem('advisingStudents')) || [];
+      const student = students.find(s => s.id === studentId);
+
+      if (!student) {
+        showError('Student not found');
+        return;
+      }
+
+      if (password === student.password) {
+        sessionStorage.setItem(`student_${studentId}_auth`, 'true');
+        currentStudent = student;
+        showContent();
+      } else {
+        showError('Incorrect password');
+        document.getElementById('passwordInput').value = '';
+      }
+    }
+
+    function showError(msg) {
+      document.getElementById('errorMsg').textContent = msg;
+    }
+
+    function showContent() {
+      const students = JSON.parse(localStorage.getItem('advisingStudents')) || [];
+      currentStudent = students.find(s => s.id === studentId);
+
+      if (!currentStudent) {
+        showError('Student not found');
+        return;
+      }
+
+      document.getElementById('passwordScreen').classList.add('hidden');
+      document.getElementById('contentArea').style.display = 'block';
+      document.getElementById('studentName').textContent = currentStudent.name + "'s Plan";
+      
+      // Display major
+      const majorLabels = {
+        'math-bs': 'Mathematics, BS',
+        'math-ba': 'Mathematics, BA',
+        'math-actuarial': 'Applied Mathematics: Actuarial & Financial Math, BS',
+        'math-datasci': 'Applied Mathematics: Data Science, BS',
+        'math-ed': 'Mathematics Education, Secondary, BSE'
+      };
+      const majorDisplay = currentStudent.major ? majorLabels[currentStudent.major] || currentStudent.major : 'No major set';
+      document.getElementById('majorDisplay').textContent = majorDisplay;
+
+      renderPlan();
+    }
+
+    function renderPlan() {
+      const grid = document.getElementById('planGrid');
+      const progressSection = document.getElementById('progressSection');
+      grid.innerHTML = '';
+
+      // Calculate total units
+      let totalUnits = 0;
+      const semesters = ['freshmanFall', 'freshmanSpring', 'sophomoreFall', 'sophomoreSpring', 'juniorFall', 'juniorSpring', 'seniorFall', 'seniorSpring'];
+      semesters.forEach(sem => {
+        const courses = currentStudent.plan[sem] || [];
+        courses.forEach(c => {
+          const units = parseInt(c.units) || 3;
+          totalUnits += units;
+        });
+      });
+
+      const requiredUnits = 120;
+      const progressPercent = Math.min((totalUnits / requiredUnits) * 100, 100);
+
+      // Progress bar in header
+      progressSection.innerHTML = `
+        <div class="progress-section">
+          <div class="progress-label">
+            <span class="progress-title">Degree Progress</span>
+            <span class="progress-stats">${totalUnits} / ${requiredUnits} units</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width:${progressPercent}%"></div>
+          </div>
+        </div>
+      `;
+
+      const semesterLabels = {
+        freshmanFall: 'Freshman Fall',
+        freshmanSpring: 'Freshman Spring',
+        sophomoreFall: 'Sophomore Fall',
+        sophomoreSpring: 'Sophomore Spring',
+        juniorFall: 'Junior Fall',
+        juniorSpring: 'Junior Spring',
+        seniorFall: 'Senior Fall',
+        seniorSpring: 'Senior Spring'
+      };
+
+      // Create 4 rows, each with 2 columns
+      const yearRows = [
+        ['freshmanFall', 'freshmanSpring'],
+        ['sophomoreFall', 'sophomoreSpring'],
+        ['juniorFall', 'juniorSpring'],
+        ['seniorFall', 'seniorSpring']
+      ];
+
+      yearRows.forEach((rowSemesters, rowIdx) => {
+        const row = document.createElement('div');
+        row.style.display = 'flex';
+        row.style.gap = '1.5rem';
+        row.style.width = '100%';
+        if (rowIdx > 0) row.style.marginTop = '1.5rem';
+
+        rowSemesters.forEach(sem => {
+          const courses = currentStudent.plan[sem] || [];
+          const card = document.createElement('div');
+          card.className = 'year-card';
+          card.style.flex = '1 1 50%';
+          card.style.minWidth = '0';
+          
+          let coursesHTML = '';
+          if (courses.length > 0) {
+            coursesHTML = `
+              <table class="course-table">
+                <thead>
+                  <tr>
+                    <th>Code</th>
+                    <th>Course Name</th>
+                    <th>Units</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${courses.map(course => `
+                    <tr>
+                      <td>${course.code || ''}</td>
+                      <td>${course.name || ''}</td>
+                      <td>${course.units}</td>
+                    </tr>
+                  `).join('')}
+                </tbody>
+              </table>
+            `;
+          } else {
+            coursesHTML = '<p style="color:var(--faint);font-style:italic;margin-top:.8rem">No courses added</p>';
+          }
+
+          card.innerHTML = `
+            <h3 class="year-title">${semesterLabels[sem]}</h3>
+            ${coursesHTML}
+          `;
+          row.appendChild(card);
+        });
+
+        grid.appendChild(row);
+      });
+    }
+
+    function logout() {
+      sessionStorage.removeItem(`student_${studentId}_auth`);
+      document.getElementById('passwordScreen').classList.remove('hidden');
+      document.getElementById('contentArea').style.display = 'none';
+      document.getElementById('passwordInput').value = '';
+      document.getElementById('errorMsg').textContent = '';
+    }
+
+    // Allow Enter key to submit
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('passwordInput').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') checkPassword();
+      });
+      checkAuthentication();
+    });
+  </script>
+</body>
+</html>

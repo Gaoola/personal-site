@@ -43,7 +43,9 @@
     }
     .nav-name{font-family:var(--sans);font-size:.95rem;font-weight:600;letter-spacing:-.01em;color:var(--text);text-decoration:none}
     .nav-links{display:flex;gap:2rem;list-style:none}
-    .nav-links a{font-size:.78rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--muted);transition:color .15s}
+    .nav-links a{font-size:.78rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--muted);transition:color .2s ease,transform .2s ease;position:relative}
+    .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--accent);transition:width .25s ease}
+    .nav-links a:hover::after{width:100%}
     .nav-links a:hover,.nav-links a.active{color:var(--accent)}
 
     /* ── HERO ── */
@@ -82,11 +84,12 @@
     .tag-au{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-border)}
 
     .btn-row{display:flex;gap:.8rem;flex-wrap:wrap}
-    .btn{display:inline-block;padding:.6rem 1.4rem;font-family:var(--sans);font-size:.82rem;font-weight:500;letter-spacing:.04em;text-decoration:none;border-radius:2px;transition:all .18s;cursor:pointer;border:none}
-    .btn-p{background:var(--accent);color:#fff}
-    .btn-p:hover{background:#245929}
+    .btn{display:inline-block;padding:.6rem 1.4rem;font-family:var(--sans);font-size:.82rem;font-weight:500;letter-spacing:.04em;text-decoration:none;border-radius:2px;transition:all .25s cubic-bezier(.4,0,.2,1);cursor:pointer;border:none;position:relative;overflow:hidden}
+    .btn-p{background:var(--accent);color:#fff;box-shadow:0 2px 8px rgba(45,110,53,.15)}
+    .btn-p:hover{background:#245929;transform:translateY(-2px);box-shadow:0 4px 12px rgba(45,110,53,.25)}
+    .btn-p:active{transform:translateY(0)}
     .btn-o{background:transparent;color:var(--muted);border:1.5px solid var(--border)}
-    .btn-o:hover{border-color:var(--accent);color:var(--accent)}
+    .btn-o:hover{border-color:var(--accent);color:var(--accent);background:rgba(45,110,53,.03);transform:translateX(2px)}
 
     /* OBU badge */
     .obu-badge{
@@ -152,6 +155,7 @@
     <ul class="nav-links">
       <li><a href="index.html" class="active">About</a></li>
       <li><a href="teaching.html">Teaching</a></li>
+      <li><a href="advising.html">Advising</a></li>
       <li><a href="contact.html">Contact</a></li>
       <li><a href="CV_Gao.pdf" target="_blank">CV</a></li>
     </ul>
@@ -200,7 +204,7 @@
         </div>
         <div class="qf">
           <div class="qf-label">Email</div>
-          <div class="qf-val"><a href="mailto:cgao0392ucr.edu">cgao0392ucr.edu</a></div>
+          <div class="qf-val"><a href="mailto:cgao039@ucr.edu">cgao039@ucr.edu</a></div>
         </div>
       </div>
     </div>
@@ -225,7 +229,7 @@
 
   <footer>
     <p>Chaoyang Gao (Kevin) · Mathematics</p>
-    <p>Updated 2025</p>
+    <p>Updated 2026</p>
   </footer>
 </body>
 </html>

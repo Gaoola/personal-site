@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Student Advising — Chaoyang Gao (Kevin)</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#f7f3ee;--bg2:#f0ebe3;--bg3:#e8e1d7;--border:#d6cfc4;
+      --text:#1a1a18;--muted:#6b6560;--faint:#9c958d;
+      --accent:#2d6e35;--accent-dim:#c8deca;--accent-bg:#edf5ee;
+      --gold:#a07820;--gold-bg:#fdf6e3;--gold-border:#e8d49a;
+      --serif:'DM Serif Display',Georgia,serif;
+      --sans:'DM Sans',sans-serif;
+      --mono:'DM Mono',monospace;
+    }
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:18px;font-weight:300;line-height:1.75;overflow-x:hidden}
+
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 4rem;background:rgba(247,243,238,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+    .nav-name{font-family:var(--sans);font-size:.95rem;font-weight:600;letter-spacing:-.01em;color:var(--text);text-decoration:none}
+    .nav-links{display:flex;gap:2rem;list-style:none}
+    .nav-links a{font-size:.78rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--muted);transition:color .2s ease,transform .2s ease;position:relative}
+    .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--accent);transition:width .25s ease}
+    .nav-links a:hover::after,.nav-links a.active::after{width:100%}
+
+    .page-hero{padding:8rem 4rem 3.5rem;border-bottom:1px solid var(--border);opacity:0;animation:fadeUp .6s .05s ease forwards}
+    .hero-label{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:1.2rem}
+    .hero-label::before{content:'';display:block;width:24px;height:1px;background:var(--accent)}
+    .page-title{font-family:var(--serif);font-size:clamp(2.4rem,5vw,3.8rem);font-weight:400;letter-spacing:-.02em;line-height:1.1;margin-bottom:1rem}
+    .page-sub{font-size:1rem;color:var(--muted);max-width:580px;line-height:1.8}
+
+    .page-body{padding:4rem 4rem 6rem}
+
+    .students-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2rem;margin-top:2rem}
+    .student-card{
+      padding:2rem;background:var(--bg2);border:1px solid var(--border);border-radius:4px;
+      text-decoration:none;color:var(--text);transition:all .25s cubic-bezier(.4,0,.2,1);
+      cursor:pointer;display:flex;flex-direction:column;gap:1rem;
+    }
+    .student-card:hover{border-color:var(--accent);background:var(--accent-bg);transform:translateY(-3px);box-shadow:0 4px 12px rgba(45,110,53,.12)}
+    .student-name{font-family:var(--serif);font-size:1.5rem;font-weight:400;color:var(--text)}
+    .student-status{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+
+    .sec-hd{display:flex;align-items:baseline;gap:1rem;margin-bottom:2rem;padding-bottom:.8rem;border-bottom:1px solid var(--border);margin-top:3.5rem}
+    .sec-hd:first-of-type{margin-top:0}
+    .sec-n{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;color:var(--gold)}
+    .sec-t{font-family:var(--serif);font-size:1.8rem;font-weight:400;letter-spacing:-.01em}
+
+    .resources-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:2rem;margin-top:2rem}
+    .resource-card{
+      padding:1.6rem;background:var(--bg2);border:1px solid var(--border);border-radius:4px;
+      transition:all .25s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;gap:.8rem;
+    }
+    .resource-card:hover{border-color:var(--gold);background:var(--gold-bg);transform:translateY(-2px);box-shadow:0 4px 12px rgba(160,120,32,.12)}
+    .resource-title{font-family:var(--serif);font-size:1.2rem;font-weight:400;color:var(--text)}
+    .resource-meta{display:flex;flex-direction:column;gap:.4rem;font-size:.9rem;color:var(--muted)}
+    .resource-date{font-family:var(--mono);font-size:.8rem;color:var(--gold);font-weight:500}
+    .resource-link{display:inline-block;margin-top:.6rem;padding:.5rem .8rem;background:var(--gold);color:#fff;text-decoration:none;border-radius:2px;font-size:.85rem;font-weight:500;transition:all .2s}
+    .resource-link:hover{background:#8a6415}
+
+    .samples-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:2rem;margin-top:2rem}
+    .sample-card{
+      padding:2rem;background:var(--bg2);border:1px solid var(--border);border-radius:4px;
+      text-decoration:none;color:var(--text);transition:all .25s cubic-bezier(.4,0,.2,1);
+      cursor:pointer;display:flex;flex-direction:column;gap:.8rem;
+    }
+    .sample-card:hover{border-color:var(--accent);background:var(--accent-bg);transform:translateY(-3px);box-shadow:0 4px 12px rgba(45,110,53,.12)}
+    .sample-title{font-family:var(--serif);font-size:1.4rem;font-weight:400;color:var(--text)}
+    .sample-subtitle{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+
+    .admin-link{
+      position:fixed;bottom:2rem;right:2rem;
+      width:50px;height:50px;
+      background:var(--accent);color:#fff;
+      border-radius:50%;display:flex;align-items:center;justify-content:center;
+      font-size:1.4rem;text-decoration:none;
+      box-shadow:0 4px 12px rgba(45,110,53,.2);
+      transition:all .2s ease;
+      z-index:50;
+    }
+    .admin-link:hover{transform:scale(1.1);box-shadow:0 6px 16px rgba(45,110,53,.3)}
+
+    footer{padding:1.6rem 4rem;border-top:1px solid var(--border);background:var(--bg2);display:flex;justify-content:space-between;align-items:center}
+    footer p{font-family:var(--mono);font-size:.7rem;color:var(--faint)}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+    @media(max-width:900px){
+      nav{padding:1rem 1.5rem}.nav-links{gap:1.2rem}
+      .page-hero,.page-body{padding-left:1.8rem;padding-right:1.8rem}
+      .students-grid{grid-template-columns:1fr}
+      footer{flex-direction:column;gap:.4rem;padding:1.2rem 1.8rem;text-align:center}
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="nav-name" href="index.html">Chaoyang Gao (Kevin)</a>
+    <ul class="nav-links">
+      <li><a href="index.html">About</a></li>
+      <li><a href="teaching.html">Teaching</a></li>
+      <li><a href="advising.html" class="active">Advising</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="CV_Gao.pdf" target="_blank">CV</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-hero">
+    <div class="hero-label">Mentorship</div>
+    <h1 class="page-title">Student Advising</h1>
+    <p class="page-sub">Access your personalized 4-year course plan and advising materials. Click your name to view your plan.</p>
+  </div>
+
+  <div class="page-body">
+    <div class="sec-hd"><span class="sec-n">01</span><h2 class="sec-t">Advisees</h2></div>
+    <div class="students-grid" id="studentsGrid"></div>
+
+    <div class="sec-hd"><span class="sec-n">02</span><h2 class="sec-t">Conference Opportunities</h2></div>
+    <p style="color:var(--muted);margin-bottom:2rem">Conferences and professional development opportunities</p>
+    <div class="resources-grid" id="resourcesGrid"></div>
+
+    <div class="sec-hd"><span class="sec-n">03</span><h2 class="sec-t">Sample Degree Plans</h2></div>
+    <p style="color:var(--muted);margin-bottom:2rem">Example 4-year course schedules for different mathematics majors at OBU</p>
+    <div class="samples-grid" id="samplesGrid"></div>
+  </div>
+
+  <a href="admin.html" class="admin-link" title="Admin Panel">⚙</a>
+
+  <footer>
+    <p>Chaoyang Gao (Kevin) · Mathematics</p>
+    <p>Updated 2026</p>
+  </footer>
+
+  <script>
+    // Initialize with sample students
+    function initializeStudents() {
+      const existingData = localStorage.getItem('advisingStudents');
+      if (!existingData) {
+        const sampleStudents = [
+          {
+            id: 1,
+            name: 'Alice Johnson',
+            password: 'alice123',
+            plan: {
+              freshmanFall: [
+                { code: 'MATH 1033', name: 'Calculus I', units: 3 },
+                { code: 'MATH 1021', name: 'Calculus Lab', units: 1 },
+                { code: 'PHYS 101', name: 'Physics I', units: 4 },
+                { code: 'ENG 101', name: 'Composition', units: 3 }
+              ],
+              freshmanSpring: [
+                { code: 'MATH 1034', name: 'Calculus II', units: 3 },
+                { code: 'MATH 1022', name: 'Calculus Lab II', units: 1 },
+                { code: 'PHYS 102', name: 'Physics II', units: 4 },
+                { code: 'ENG 102', name: 'Composition II', units: 3 }
+              ],
+              sophomoreFall: [
+                { code: 'MATH 1163', name: 'Linear Algebra', units: 3 },
+                { code: 'MATH 2023', name: 'Differential Equations', units: 3 },
+                { code: 'CS 101', name: 'Intro to Programming', units: 4 }
+              ],
+              sophomoreSpring: [
+                { code: 'MATH 2163', name: 'Advanced Linear Algebra', units: 3 },
+                { code: 'MATH 2024', name: 'Advanced Differential Equations', units: 3 },
+                { code: 'CS 102', name: 'Data Structures', units: 4 }
+              ],
+              juniorFall: [
+                { code: 'MATH 3013', name: 'Real Analysis I', units: 3 },
+                { code: 'MATH 3023', name: 'Abstract Algebra I', units: 3 },
+                { code: 'MATH 3043', name: 'Number Theory', units: 3 }
+              ],
+              juniorSpring: [
+                { code: 'MATH 3014', name: 'Real Analysis II', units: 3 },
+                { code: 'MATH 3024', name: 'Abstract Algebra II', units: 3 },
+                { code: 'PHI 201', name: 'Philosophy', units: 3 }
+              ],
+              seniorFall: [
+                { code: 'MATH 4013', name: 'Topology', units: 3 },
+                { code: 'MATH 4053', name: 'Complex Analysis', units: 3 }
+              ],
+              seniorSpring: [
+                { code: 'MATH 4014', name: 'Capstone', units: 3 },
+                { code: 'MATH 4073', name: 'Mathematical Modeling', units: 3 }
+              ]
+            }
+          },
+          {
+            id: 2,
+            name: 'Bob Smith',
+            password: 'bob123',
+            plan: {
+              freshmanFall: [
+                { code: 'MATH 1033', name: 'Calculus I', units: 3 },
+                { code: 'MATH 1021', name: 'Calculus Lab', units: 1 },
+                { code: 'PHYS 101', name: 'Physics I', units: 4 },
+                { code: 'ENG 101', name: 'Composition', units: 3 }
+              ],
+              freshmanSpring: [
+                { code: 'MATH 1034', name: 'Calculus II', units: 3 },
+                { code: 'MATH 1022', name: 'Calculus Lab II', units: 1 },
+                { code: 'PHYS 102', name: 'Physics II', units: 4 },
+                { code: 'ENG 102', name: 'Composition II', units: 3 }
+              ],
+              sophomoreFall: [
+                { code: 'MATH 1163', name: 'Linear Algebra', units: 3 },
+                { code: 'MATH 2023', name: 'Differential Equations', units: 3 },
+                { code: 'CS 101', name: 'Intro to Programming', units: 4 }
+              ],
+              sophomoreSpring: [
+                { code: 'MATH 2163', name: 'Advanced Linear Algebra', units: 3 },
+                { code: 'MATH 2024', name: 'Advanced Differential Equations', units: 3 },
+                { code: 'CS 102', name: 'Data Structures', units: 4 }
+              ],
+              juniorFall: [
+                { code: 'MATH 3013', name: 'Real Analysis I', units: 3 },
+                { code: 'MATH 3023', name: 'Abstract Algebra I', units: 3 },
+                { code: 'MATH 3043', name: 'Number Theory', units: 3 }
+              ],
+              juniorSpring: [
+                { code: 'MATH 3014', name: 'Real Analysis II', units: 3 },
+                { code: 'MATH 3024', name: 'Abstract Algebra II', units: 3 },
+                { code: 'PHI 201', name: 'Philosophy', units: 3 }
+              ],
+              seniorFall: [
+                { code: 'MATH 4013', name: 'Topology', units: 3 },
+                { code: 'MATH 4053', name: 'Complex Analysis', units: 3 }
+              ],
+              seniorSpring: [
+                { code: 'MATH 4014', name: 'Capstone', units: 3 },
+                { code: 'MATH 4073', name: 'Mathematical Modeling', units: 3 }
+              ]
+            }
+          },
+          {
+            id: 3,
+            name: 'Carol Lee',
+            password: 'carol123',
+            plan: {
+              freshmanFall: [
+                { code: 'MATH 1033', name: 'Calculus I', units: 3 },
+                { code: 'MATH 1021', name: 'Calculus Lab', units: 1 },
+                { code: 'PHYS 101', name: 'Physics I', units: 4 },
+                { code: 'ENG 101', name: 'Composition', units: 3 }
+              ],
+              freshmanSpring: [
+                { code: 'MATH 1034', name: 'Calculus II', units: 3 },
+                { code: 'MATH 1022', name: 'Calculus Lab II', units: 1 },
+                { code: 'PHYS 102', name: 'Physics II', units: 4 },
+                { code: 'ENG 102', name: 'Composition II', units: 3 }
+              ],
+              sophomoreFall: [
+                { code: 'MATH 1163', name: 'Linear Algebra', units: 3 },
+                { code: 'MATH 2023', name: 'Differential Equations', units: 3 },
+                { code: 'CS 101', name: 'Intro to Programming', units: 4 }
+              ],
+              sophomoreSpring: [
+                { code: 'MATH 2163', name: 'Advanced Linear Algebra', units: 3 },
+                { code: 'MATH 2024', name: 'Advanced Differential Equations', units: 3 },
+                { code: 'CS 102', name: 'Data Structures', units: 4 }
+              ],
+              juniorFall: [
+                { code: 'MATH 3013', name: 'Real Analysis I', units: 3 },
+                { code: 'MATH 3023', name: 'Abstract Algebra I', units: 3 },
+                { code: 'MATH 3043', name: 'Number Theory', units: 3 }
+              ],
+              juniorSpring: [
+                { code: 'MATH 3014', name: 'Real Analysis II', units: 3 },
+                { code: 'MATH 3024', name: 'Abstract Algebra II', units: 3 },
+                { code: 'PHI 201', name: 'Philosophy', units: 3 }
+              ],
+              seniorFall: [
+                { code: 'MATH 4013', name: 'Topology', units: 3 },
+                { code: 'MATH 4053', name: 'Complex Analysis', units: 3 }
+              ],
+              seniorSpring: [
+                { code: 'MATH 4014', name: 'Capstone', units: 3 },
+                { code: 'MATH 4073', name: 'Mathematical Modeling', units: 3 }
+              ]
+            }
+          },
+          {
+            id: 4,
+            name: 'David Chen',
+            password: 'david123',
+            plan: {
+              freshmanFall: [
+                { code: 'MATH 1033', name: 'Calculus I', units: 3 },
+                { code: 'MATH 1021', name: 'Calculus Lab', units: 1 },
+                { code: 'PHYS 101', name: 'Physics I', units: 4 },
+                { code: 'ENG 101', name: 'Composition', units: 3 }
+              ],
+              freshmanSpring: [
+                { code: 'MATH 1034', name: 'Calculus II', units: 3 },
+                { code: 'MATH 1022', name: 'Calculus Lab II', units: 1 },
+                { code: 'PHYS 102', name: 'Physics II', units: 4 },
+                { code: 'ENG 102', name: 'Composition II', units: 3 }
+              ],
+              sophomoreFall: [
+                { code: 'MATH 1163', name: 'Linear Algebra', units: 3 },
+                { code: 'MATH 2023', name: 'Differential Equations', units: 3 },
+                { code: 'CS 101', name: 'Intro to Programming', units: 4 }
+              ],
+              sophomoreSpring: [
+                { code: 'MATH 2163', name: 'Advanced Linear Algebra', units: 3 },
+                { code: 'MATH 2024', name: 'Advanced Differential Equations', units: 3 },
+                { code: 'CS 102', name: 'Data Structures', units: 4 }
+              ],
+              juniorFall: [
+                { code: 'MATH 3013', name: 'Real Analysis I', units: 3 },
+                { code: 'MATH 3023', name: 'Abstract Algebra I', units: 3 },
+                { code: 'MATH 3043', name: 'Number Theory', units: 3 }
+              ],
+              juniorSpring: [
+                { code: 'MATH 3014', name: 'Real Analysis II', units: 3 },
+                { code: 'MATH 3024', name: 'Abstract Algebra II', units: 3 },
+                { code: 'PHI 201', name: 'Philosophy', units: 3 }
+              ],
+              seniorFall: [
+                { code: 'MATH 4013', name: 'Topology', units: 3 },
+                { code: 'MATH 4053', name: 'Complex Analysis', units: 3 }
+              ],
+              seniorSpring: [
+                { code: 'MATH 4014', name: 'Capstone', units: 3 },
+                { code: 'MATH 4073', name: 'Mathematical Modeling', units: 3 }
+              ]
+            }
+          }
+        ];
+        localStorage.setItem('advisingStudents', JSON.stringify(sampleStudents));
+      }
+    }
+
+    function renderStudents() {
+      const students = JSON.parse(localStorage.getItem('advisingStudents')) || [];
+      const grid = document.getElementById('studentsGrid');
+      grid.innerHTML = '';
+
+      const majorLabels = {
+        'math-bs': 'Mathematics, BS',
+        'math-ba': 'Mathematics, BA',
+        'math-actuarial': 'Actuarial & Financial Math',
+        'math-datasci': 'Data Science',
+        'math-ed': 'Mathematics Education'
+      };
+
+      students.forEach(student => {
+        const card = document.createElement('a');
+        card.className = 'student-card';
+        card.href = `student.html?id=${student.id}`;
+        const majorDisplay = student.major ? majorLabels[student.major] || student.major : 'No major set';
+        card.innerHTML = `
+          <div class="student-name">${student.name}</div>
+          <div class="student-status">${majorDisplay}</div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function renderResources() {
+      const resources = [
+        // 2026
+        {
+          name: 'MAA MathFest 2026',
+          date: 'August 5-8, 2026',
+          location: 'Boston, MA',
+          description: 'MAA annual summer meeting featuring research presentations and teaching workshops',
+          url: 'https://maa.org/event/mathfest/'
+        },
+        {
+          name: 'AMS Fall Central Sectional Meeting',
+          date: 'October 24-25, 2026',
+          location: 'University of Minnesota-Duluth, Duluth, MN',
+          description: 'Regional AMS meeting in the central states',
+          url: 'https://www.ams.org/meetings/sectional/fall2026c'
+        },
+        // 2027
+        {
+          name: 'Joint Mathematics Meetings (JMM) 2027',
+          date: 'January 12-15, 2027',
+          location: 'Chicago, IL',
+          description: 'The largest annual meeting of mathematicians in North America',
+          url: 'https://www.ams.org/meetings/national/national'
+        },
+        {
+          name: 'MAA Oklahoma-Arkansas Section Annual Meeting',
+          date: 'April 1-3, 2027',
+          location: 'Oklahoma Baptist University, Shawnee, OK',
+          description: 'Regional MAA annual meeting hosted at OBU - keynote speakers, student competitions, presentations',
+          url: 'http://sections.maa.org/okar/'
+        },
+        {
+          name: 'AMS Spring Central Sectional Meeting',
+          date: 'April 17-18, 2027',
+          location: 'University of Iowa, Iowa City, IA',
+          description: 'Regional AMS meeting in the central states',
+          url: 'https://www.ams.org/meetings/sectional/spring2027c'
+        },
+        {
+          name: 'MAA MathFest 2027',
+          date: 'August 4-7, 2027',
+          location: 'New Orleans, LA',
+          description: 'Mathematical Association of America national conference',
+          url: 'https://maa.org/event/mathfest/'
+        },
+        {
+          name: 'AMS Fall Central Sectional Meeting',
+          date: 'September 11-12, 2027',
+          location: 'University of Oklahoma, Norman, OK',
+          description: 'Fall regional AMS meeting in the central states',
+          url: 'https://www.ams.org/meetings/sectional/fall2027c'
+        },
+        // 2028
+        {
+          name: 'Joint Mathematics Meetings (JMM) 2028',
+          date: 'January 5-8, 2028',
+          location: 'Philadelphia, PA',
+          description: 'The largest annual meeting of mathematicians in North America',
+          url: 'https://www.ams.org/meetings/national/national'
+        },
+        {
+          name: 'MAA MathFest 2028',
+          date: 'August 2-5, 2028',
+          location: 'San Diego, CA',
+          description: 'Mathematical Association of America national conference',
+          url: 'https://maa.org/event/mathfest/'
+        }
+      ];
+
+      const grid = document.getElementById('resourcesGrid');
+      grid.innerHTML = '';
+
+      resources.forEach(resource => {
+        const card = document.createElement('div');
+        card.className = 'resource-card';
+        card.innerHTML = `
+          <div class="resource-title">${resource.name}</div>
+          <div class="resource-meta">
+            <div class="resource-date">📅 ${resource.date}</div>
+            <div>📍 ${resource.location}</div>
+            <div>${resource.description}</div>
+          </div>
+          <a href="${resource.url}" target="_blank" class="resource-link">Learn More →</a>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function renderSamples() {
+      const samples = [
+        {
+          id: 'math-bs',
+          name: 'Mathematics, BS',
+          subtitle: 'Bachelor of Science'
+        },
+        {
+          id: 'math-ba',
+          name: 'Mathematics, BA',
+          subtitle: 'Bachelor of Arts'
+        },
+        {
+          id: 'math-actuarial',
+          name: 'Applied Mathematics: Actuarial & Financial Math, BS',
+          subtitle: 'BS with Emphasis'
+        },
+        {
+          id: 'math-datasci',
+          name: 'Applied Mathematics: Data Science, BS',
+          subtitle: 'BS with Emphasis'
+        },
+        {
+          id: 'math-ed',
+          name: 'Mathematics Education, Secondary, BSE',
+          subtitle: 'Bachelor of Science in Education'
+        }
+      ];
+
+      const grid = document.getElementById('samplesGrid');
+      grid.innerHTML = '';
+
+      samples.forEach(sample => {
+        const card = document.createElement('a');
+        card.className = 'sample-card';
+        card.href = `sample.html?major=${sample.id}`;
+        card.innerHTML = `
+          <div class="sample-title">${sample.name}</div>
+          <div class="sample-subtitle">${sample.subtitle}</div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    initializeStudents();
+    renderStudents();
+    renderResources();
+    renderSamples();
+  </script>
+</body>
+</html>
